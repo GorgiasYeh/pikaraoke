@@ -18,6 +18,12 @@
   <link rel="stylesheet" href="{{  url_for('static', filename='phosphor/regular/style.css') }}">
   <link rel="stylesheet" href="{{  url_for('static', filename='custom.css') }}">
   <link rel="icon" type="image/png" href="{{  url_for('static', filename='images/microphone.png') }}">
+  {# Added to a phone's home screen, PiKaraoke opens full screen like an app. #}
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="PiKaraoke">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
   <script>
     window.pikaraokeConfig = {

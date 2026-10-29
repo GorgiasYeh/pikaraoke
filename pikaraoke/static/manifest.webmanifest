@@ -1,0 +1,13 @@
+{
+  "name": "PiKaraoke",
+  "short_name": "PiKaraoke",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#f2f2f7",
+  "theme_color": "#f2f2f7",
+  "icons": [
+    { "src": "images/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "images/app-icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
