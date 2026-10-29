@@ -619,6 +619,21 @@ td {
   ) !important;
 }
 
+/* The Songs list's add button: a fixed column wide enough for its label, and a
+   tap target as tall as an iOS row. */
+.browse-table td:first-child {
+  width: 2.5rem;
+}
+.browse-table .add-cell {
+  width: 1%;
+  white-space: nowrap;
+}
+.browse-table .add-song-link {
+  min-height: 2.25rem;
+  padding-inline: 1em;
+  font-size: 0.9rem;
+}
+
 /* Drag and drop highlight */
 .drag-chosen {
   background-color: var(--bulma-info) !important;
@@ -844,6 +859,10 @@ td {
   .navbar-brand > .navbar-burger {
     display: none;
   }
+  /* The name shows here, where the bar has room for it; the wide bar hides it. */
+  #current-user > .is-truncated {
+    display: inline;
+  }
 
   /* "More" opens the menu as an iOS sheet resting on the tab bar. */
   .navbar-menu.is-active {
@@ -861,8 +880,54 @@ td {
     font-size: 1.05rem;
   }
 
+  /* Every dialog is an iOS sheet: it rises from the bottom edge, where a thumb
+     reaches it, rather than floating mid-screen. */
+  .modal {
+    justify-content: flex-end;
+  }
+  .modal-card {
+    width: calc(100% - 1rem);
+    max-width: none;
+    margin-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+  .modal .panel-block {
+    min-height: 3rem;
+    justify-content: center;
+    font-size: 1.05rem;
+  }
+
   /* Toasts rise from above the tab bar rather than behind it. */
   .notification-stack {
     bottom: calc(var(--tab-bar-height) + 0.5rem) !important;
   }
+}
+
+/* A caption above a grouped section, as iOS sets one: small, grey, outside the
+   card it names. */
+.section-caption {
+  margin: 0 0 0.4rem 0.75rem;
+  color: var(--bulma-text-weak);
+  font-size: 0.8rem;
+}
+
+/* The player controls: three big glyphs, each over its name. */
+.player-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+}
+.player-buttons a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding-block: 0.4rem;
+  font-size: 0.85rem;
+}
+.player-buttons .ph {
+  font-size: 2.6rem;
+}
+.transpose-step {
+  min-width: 2.75rem;
+  font-size: 1.3rem;
 }

@@ -58,6 +58,8 @@
       semitonesInfo: {{ _("A semitone is also known as a half-step. It is the smallest interval used in classical Western music, equal to a twelfth of an octave or half a tone.") | tojson }},
       // {# MSG: Confirmation dialog when expanding the filesystem on Raspberry Pi, which triggers a reboot. #}
       confirmExpandFilesystem: {{ _("Are you sure you want to expand the filesystem? This will reboot your raspberry pi.") | tojson }},
+      // {# MSG: Label an add-to-queue button switches to once its song is in the queue. #}
+      addedToQueue: {{ _("In the queue") | tojson }},
       // {# MSG: Generic error prefix shown before an error message. #}
       errorLabel: {{ _("Error") | tojson }}
     };
@@ -299,15 +301,17 @@
       window.socket.on("now_playing", window.kjSessionHandler);
     }
 
-    // The Queue tab's badge counts the songs waiting. queue_update carries no
-    // payload, so the count is refetched; the handler is swapped rather than
-    // stacked because this script re-runs on every SPA navigation.
+    // The Queue tab's badge counts the songs waiting. A song leaving the queue to
+    // play fires now_playing rather than queue_update, so both refetch the count;
+    // the handler is swapped rather than stacked because this script re-runs on
+    // every SPA navigation.
     function bindQueueBadge() {
       if (!window.socket || !$("#queue-count").length) {
         return;
       }
       if (window.queueBadgeHandler) {
         window.socket.off("queue_update", window.queueBadgeHandler);
+        window.socket.off("now_playing", window.queueBadgeHandler);
       }
       window.queueBadgeHandler = function () {
         $.getJSON(window.pikaraokeConfig.queueUrl, function (queue) {
@@ -315,6 +319,7 @@
         });
       };
       window.socket.on("queue_update", window.queueBadgeHandler);
+      window.socket.on("now_playing", window.queueBadgeHandler);
     }
 
     // Queueing a song already on this machine. Delegated because the Songs page
@@ -333,11 +338,17 @@
         // and the body is assembled by hand to pass it through untouched: a
         // filename that is not valid UTF-8 cannot survive a decode here.
         var dataSong = this.getAttribute("data-song");
+        var $link = $(this);
         resolveSinger().done(function (name) {
           var body = "song_to_add=" + dataSong + "&song_added_by=" + encodeURIComponent(name);
           $.post(window.pikaraokeConfig.enqueueUrl, body, function (data) {
             // {# MSG: Notification shown after trying to add a song to the queue. The song name comes after this string. #}
             showNotification(data.success[1], data.success[0] ? "is-success" : "is-danger");
+            // A labelled button says it worked in place, so a guest does not
+            // tap it again wondering whether it did.
+            if (data.success[0] && $link.hasClass("button")) {
+              $link.removeClass("is-link").addClass("is-success").text(window.translations.addedToQueue);
+            }
           });
         });
       });

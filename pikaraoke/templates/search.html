@@ -6,15 +6,16 @@
 		padding: 0;
 		margin: 0;
 	}
+	/* Each result is its own iOS card on the page's ground. */
 	ul.search_result_items li {
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
 		gap: 0.75rem;
 		padding: 0.75rem;
-	}
-	ul.search_result_items li:nth-child(even) {
-		background-color: var(--bulma-scheme-main-ter);
+		margin-bottom: 0.75rem;
+		border-radius: var(--bulma-radius);
+		background-color: var(--bulma-scheme-main);
 	}
 	@media screen and (min-width: 768px) {
 		ul.search_result_items li {
@@ -508,7 +509,7 @@
 			</div>
 			<div class="control">
 				{# MSG: Submit button on the search form for searching YouTube. #}
-				<a class="button is-warning" id="search-link">{% trans %}Search{% endtrans %}</a>
+				<a class="button is-link" id="search-link">{% trans %}Search{% endtrans %}</a>
 			</div>
 		</div>
 		{# Only one setting left: each result row carries its own queue-or-not
@@ -559,6 +560,24 @@
 			</div>
 		</div>
 	</div>
+
+	{% include 'partials/downloads.html' %}
+
+	{% if not search_results %}
+	{# A first-timer's hints, until there are results to look at. #}
+	{# MSG: Caption above the search hints on the Add New page. #}
+	<p class="section-caption mt-5">{% trans %}Tips{% endtrans %}</p>
+	<div class="card"><div class="card-content p-4 content">
+		<p class="mb-2">
+			{# MSG: Search hint. Give an example of a well-known song title followed by its singer, in quotes. #}
+			{% trans %}Type the song title and the singer for the best match, e.g. "My Way Frank Sinatra".{% endtrans %}
+		</p>
+		<p>
+			{# MSG: Search hint for when a song cannot be found. #}
+			{% trans %}Can't find it? Add "karaoke" to the search.{% endtrans %}
+		</p>
+	</div></div>
+	{% endif %}
 
 	<div class="field is-hidden" id="container_search_form">
 		<form action="{{ url_for('search.search') }}" method="get">

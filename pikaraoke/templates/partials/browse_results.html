@@ -4,21 +4,22 @@
    changes the count and the number of pages. #}
 {% import 'partials/pager.html' as pager %}
 {{ pager.pager(page, per_page, total, page_href, size_options=per_page_options) }}
-<table class="table is-striped">
+{# A row is an iOS list cell: the title, then a labelled button - an unlabelled
+   plus was the one thing guests could not find. #}
+<table class="table is-striped browse-table">
 	{% for song in songs %}
 	{% set display_name = filename_from_path(song) %}
 	<tr value="{{ song }}">
-		<td class="pl-2 pr-0">{{loop.index + skip}}</td>
-		<td id="{{display_name[0].lower()}}" class="pr-0">
+		<td id="{{display_name[0].lower()}}" class="pl-2 pr-0 has-text-weak is-size-7">{{loop.index + skip}}</td>
+		<td class="break-word">{{display_name}}</td>
+		<td class="add-cell pl-0 pr-1">
 			<a
-				class="add-song-link has-text-weight-bold has-text-success"
-				title="{{ _('Add to queue') }}"
+				class="add-song-link button is-link is-rounded is-small"
 				href="#"
 				data-song="{{url_escape(song.encode('utf-8','surrogateescape'))}}"
-				><span class="icon"><i class="ph ph-plus-circle"></i></span>
-			</a>
+				>{% trans %}Add to queue{% endtrans %}</a
+			>
 		</td>
-		<td class="break-word pr-0">{{display_name}}</td>
 		{% if admin %}
 		<td class="pr-0">
 			<a

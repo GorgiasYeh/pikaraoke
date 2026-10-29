@@ -28,8 +28,8 @@
 		var autoplayGap = !np.now_playing && !!np.up_next && np.autoplay;
 
 		if (np.now_playing) {
-			var nowPlayingHtml = `<p class="mb-1">${np.now_playing}</p>
-          <p class="has-text-text mb-1"><span class="icon is-text-size mr-1"><i class="ph ph-microphone-stage" title="Current singer"></i></span>${np.now_playing_user}</p>`;
+			var nowPlayingHtml = `<p class="mb-1 has-text-weight-semibold">${np.now_playing}</p>
+          <p class="has-text-weak is-size-6 mb-1"><span class="icon is-text-size mr-1"><i class="ph ph-microphone-stage"></i></span>${np.now_playing_user}</p>`;
 
 			if (np.now_playing_transpose != 0) {
 				nowPlayingHtml +=
@@ -51,7 +51,7 @@
 
 		if (np.up_next) {
 			$("#up-next").html(`<p class="mb-1">${np.up_next}</p>
-          <p class="has-text-text">
+          <p class="has-text-weak is-size-7">
             {# MSG: Title text for the icon marking the next person to sing. #}
             <span class="icon is-text-size mr-1"><i class="ph ph-microphone-stage" title="{{ _('Next singer') | forceescape }}"></i></span>${np.next_user}</p>`);
 		} else {
@@ -99,6 +99,10 @@
 			slider.oninput = function () {
 				output.innerHTML = getSemitonesLabel(slider.value);
 			};
+			$(".transpose-step").click(function () {
+				slider.value = Number(slider.value) + Number(this.dataset.step);
+				slider.oninput();
+			});
 		}
 
 		$("#volume-slider").on(
@@ -133,7 +137,7 @@
 			output.innerHTML = getSemitonesLabel(slider.value);
 		});
 
-		$("#pause-resume").click(function () {
+		$("#pause-resume-button").click(function () {
 			if (pikaWaiting) {
 				// Apply the slider's key to the waiting song, then start it, so the
 				// one transcode runs in the chosen key.
@@ -273,41 +277,47 @@
 
 {% block content %}
 
-<p class="is-size-4 has-text-warning mb-6" id="now-playing">&nbsp;</p>
+{# iOS grouped sections: the song on a card, the next one under its own caption. #}
+<div class="card mb-5"><div class="card-content p-4">
+	<div class="is-size-4 has-text-strong" id="now-playing">&nbsp;</div>
+</div></div>
 
-<h3>{# MSG: Title for the section displaying the next song to be played. #} {% trans %}Next Song{% endtrans %}</h3>
-<p id="up-next" class="has-text-warning mb-6"></p>
+<p class="section-caption">{# MSG: Title for the section displaying the next song to be played. #} {% trans %}Next Song{% endtrans %}</p>
+<div class="card mb-5"><div class="card-content p-4" id="up-next"></div></div>
 
 {% if admin %}
-<div class="has-background-dark box control-box" style="max-width: 500px; display: none">
-	{# MSG: Title of the box with controls such as pause and skip. #}
-	<h4>{% trans %}Player Control{% endtrans %}</h4>
-	<div class="is-size-3 is-flex is-justify-content-space-between">
-		<div class="is-size-3">
-			{# MSG: Title attribute on the button to restart the current song. #}
-			<a title="{{ _('Restart Song') }}" id="restart"><span class="icon is-text-size"><i class="ph ph-skip-back"></i></span> </a>&nbsp;&nbsp; {# MSG:
-			Title attribute on the button to play or pause the current song. #}
-			<a title="{{ _('Play/Pause') }}"><span class="icon is-text-size"><i id="pause-resume" class="ph ph-pause"></i></span> </a>&nbsp;&nbsp; {# MSG:
-			Title attribute on the button to skip to the next song. #}
-			<a title="{{ _('Stop Current Song') }}" id="skip"><span class="icon is-text-size"><i class="ph ph-skip-forward"></i></span> </a>
-		</div>
-		<div class="is-size-3 is-flex is-align-items-center">
-			<span class="icon is-text-size"><i id="vol-down" class="ph ph-speaker-low"></i></span>
-			<input
-				type="range"
-				min="0"
-				max="1"
-				value="{{ volume|default(0.85) }}"
-				step="0.025"
-				id="volume-slider"
-				style="margin: 0 8px 0px 5px; width: 100px"
-			/>
-			<span class="icon is-text-size"><i id="vol-up" class="ph ph-speaker-high"></i></span>
-		</div>
+<div class="card control-box mb-5" style="max-width: 500px; display: none"><div class="card-content p-4">
+	{# Each control is a big glyph over its name: guests should not have to guess
+	   what an icon does. #}
+	<div class="player-buttons">
+		<a title="{{ _('Restart Song') }}" id="restart">
+			<i class="ph ph-skip-back" aria-hidden="true"></i>
+			<span>{% trans %}Restart{% endtrans %}</span>
+		</a>
+		<a title="{{ _('Play/Pause') }}" id="pause-resume-button">
+			<i id="pause-resume" class="ph ph-pause" aria-hidden="true"></i>
+			<span>{% trans %}Play/Pause{% endtrans %}</span>
+		</a>
+		<a title="{{ _('Stop Current Song') }}" id="skip">
+			<i class="ph ph-skip-forward" aria-hidden="true"></i>
+			<span>{% trans %}Skip{% endtrans %}</span>
+		</a>
 	</div>
-	<hr />
-
+	<div class="is-flex is-align-items-center mt-4">
+		<span class="icon is-medium"><i id="vol-down" class="ph ph-speaker-low"></i></span>
+		<input
+			type="range"
+			min="0"
+			max="1"
+			value="{{ volume|default(0.85) }}"
+			step="0.025"
+			id="volume-slider"
+			class="is-flex-grow-1 mx-2"
+		/>
+		<span class="icon is-medium"><i id="vol-up" class="ph ph-speaker-high"></i></span>
+	</div>
 	{% if is_transpose_enabled %}
+	<hr />
 	<div class="is-flex is-justify-content-space-between is-align-items-center">
 		{# MSG: Title of a control to change the key/pitch of the playing song. #}
 		<h4 class="mb-0">{% trans %}Change Key{% endtrans %}</h4>
@@ -316,18 +326,20 @@
 			<a id="semitones-info"><span class="icon"><i class="ph ph-info" title="Info"></i></span></a>
 		</span>
 	</div>
-	<div class="is-flex mt-3">
+	{# One semitone a tap, as a KTV remote's key buttons; the slider stays for
+	   bigger jumps. #}
+	<div class="is-flex is-align-items-center is-gap-1 mt-3">
+		<button class="button transpose-step" data-step="-1" aria-label="-1">&minus;</button>
 		<input
 			type="range"
 			min="-12"
 			max="12"
 			value="0"
-			width="300px"
-			class="transpose-slider"
+			class="transpose-slider is-flex-grow-1"
 			id="transpose"
-			style="width: 100%"
 		/>
-		<button id="submit-transpose" class="button is-small" style="margin-left: 10px">
+		<button class="button transpose-step" data-step="1" aria-label="+1">+</button>
+		<button id="submit-transpose" class="button is-link">
 			{# MSG: Label on the button to confirm the change in key/pitch of the playing song. #} {% trans %}Change{%
 			endtrans %}
 		</button>
@@ -341,6 +353,6 @@
 		<div id="mic-live-list"></div>
 	</div>
 	{% endif %}
-</div>
+</div></div>
 {% endif %}
 {% endblock %}

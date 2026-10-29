@@ -34,6 +34,10 @@ def app():
             ("/info", "info.info"),
             ("/api/download", "search_api.download"),
             ("/api/preview", "search_api.preview"),
+            # The download list partial the page shares with the queue page.
+            ("/api/queue/downloads", "queue_api.get_current_downloads"),
+            ("/api/queue/downloads/errors/<error_id>", "queue_api.delete_download_error"),
+            ("/api/queue/downloads/errors/<error_id>/retry", "queue_api.retry_download_error"),
         ],
     )
 

@@ -3,39 +3,6 @@
 	$(function () {
 		loadSingerList();
 
-		// --- A-Z strip ----------------------------------------------------
-		// On a phone the strip is fixed, so it has to be told where to sit: it
-		// starts level with the top of the Songs box and rides up with the page
-		// until it reaches the top of the screen. Written to a custom property
-		// rather than `top` so the value only takes effect inside the mobile
-		// media query -- an inline `top` would follow a resize onto the desktop
-		// layout and strand the bar wherever the phone had left it.
-		const alphaBar = document.getElementById("alpha-bar");
-		const box = document.querySelector(".box");
-		// The strip is dropped for a folder that holds only subfolders.
-		if (alphaBar && box) {
-			const restingTop = box.getBoundingClientRect().top + window.scrollY;
-			let queued = false;
-			function placeAlphaBar() {
-				queued = false;
-				const top = Math.max(3, restingTop - window.scrollY);
-				alphaBar.style.setProperty("--alpha-top", top + "px");
-			}
-			// Not on load alone: a Back navigation restores the scroll position.
-			placeAlphaBar();
-			// Namespaced, and unbound first, because SPA navigation re-runs this
-			// script on every visit and a plain bind would stack a handler per page.
-			$(window)
-				.off("scroll.alphabar")
-				.on("scroll.alphabar", function () {
-					// A phone fires scroll faster than it paints and each write
-					// forces a layout, so collapse them onto the frame.
-					if (queued) return;
-					queued = true;
-					requestAnimationFrame(placeAlphaBar);
-				});
-		}
-
 		const input = document.getElementById("song-filter");
 		const resultsDiv = document.getElementById("browse-results");
 		// A folder holding only subfolders renders neither control.
@@ -287,42 +254,11 @@
 		white-space: nowrap;
 	}
 
-	@media screen and (max-width: 500px) {
+	/* A phone has no room for the strip beside the titles, and Chinese titles do
+	   not sort by A-Z anyway; the filter box finds a song there. */
+	@media screen and (max-width: 768px) {
 		#alpha-bar {
-			font-size: 13px;
-			position: fixed;
-			/* No horizontal padding and no align-items, so slots fill the 22px strip
-			   and the whole column is tappable, not just the glyph. */
-			padding: 5px 0;
-			/* Flush with the navbar and the box, which both stop at the container's
-			   5px padding. Any further in covers song titles, page links and edit
-			   icons; any further out and the blue navbar looks clipped beside it. */
-			right: 5px;
-			/* Set from the real .box position on load and on scroll. The fallback
-			   is the same place worked out statically -- the navbar's 3.25rem plus
-			   the container's 5px padding and the box's 5px margin -- so the strip
-			   lands correctly on the first paint, before the script runs. Paired
-			   with `bottom` rather than a height, or starting this far down would
-			   push the last letters off the bottom of the screen. */
-			top: var(--alpha-top, calc(3.25rem + 10px));
-			bottom: 8px;
-			flex-direction: column;
-			max-width: 22px;
-		}
-		/* Equal-height slots fill the strip, since a phone's height varies and no
-		   fixed gap padding would cover it; the desktop gap padding is reset. */
-		#alpha-bar > a,
-		#alpha-bar > span {
-			flex: 1;
-			margin-inline: 0;
-			padding-inline: 0;
-		}
-		/* The strip is an overlay, so the content has to give up the width it sits
-		   in. Bulma's 20px of box padding is not enough on its own: it leaves the
-		   page links, the rename icons and "Bulk rename" running underneath, and
-		   since the strip paints above them it swallows their taps too. */
-		.box {
-			padding-right: 28px;
+			display: none;
 		}
 	}
 </style>
