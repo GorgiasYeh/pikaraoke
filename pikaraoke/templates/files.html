@@ -230,7 +230,7 @@
 
 {% block heading_action %}
 {% if admin %}
-<a class="batch-edit-btn heading-action" href="{{ url_for('batch_song_renamer.browse')}}" title="Bulk rename"
+<a class="batch-edit-btn heading-action" href="{{ url_for('batch_song_renamer.browse')}}" title="{{ _('Bulk rename') }}"
 	><span class="icon"><i class="ph ph-note-pencil"></i></span>{# MSG: Button to open the batch song renamer page. #} {% trans %}Bulk rename{%
 	endtrans %}</a
 >
@@ -391,7 +391,7 @@
    so the strip does not change shape as the user moves between folders. #}
 {% if not view or letters %}
 <div id="alpha-bar" class="column is-full has-background-dark">
-	<a href="{{ url_for('files.browse', view=view or None, folder=folder or None) }}" title="Show all"
+	<a href="{{ url_for('files.browse', view=view or None, folder=folder or None) }}" title="{{ _('All songs') }}"
 		><span class="icon"><i class="ph ph-list-bullets"></i></span
 	></a>
 	{% if 'numeric' in letters %}
