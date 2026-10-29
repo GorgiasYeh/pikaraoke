@@ -12,6 +12,10 @@
     "Microsoft JhengHei", "Segoe UI", "Helvetica Neue", sans-serif;
   /* iOS body text is 17pt; every rem in Bulma scales from this. */
   --bulma-body-size: 17px;
+  /* Bulma's small type (tags, help lines, small buttons) is 0.75rem, too small
+     to read at arm's length; iOS footnotes are 13pt of 17. */
+  --bulma-size-7: 0.875rem;
+  --bulma-size-small: 0.875rem;
 
   /* iOS system colours: blue for anything tappable, green for "on" and adding,
      red for removing. Primary and link are both the tint, as on iOS. */
@@ -61,6 +65,22 @@
   /* Bulma scopes the list-item hover to .panel; the option lists in the modals are
      panel-blocks too, and hover the same way. */
   --bulma-panel-block-hover-background-color: var(--bulma-background);
+}
+
+/* Bulma's helper hard-codes 0.75rem rather than reading its own variable. */
+.is-size-7 {
+  font-size: var(--bulma-size-7) !important;
+}
+
+/* On a phone the root size is the one set in iOS Settings > Display > Text Size,
+   so a guest who reads with larger text gets it here too. Scoped to touch
+   screens: on a Mac the same keyword means 13pt. */
+@supports (font: -apple-system-body) {
+  @media (hover: none) and (pointer: coarse) {
+    html {
+      font: -apple-system-body;
+    }
+  }
 }
 
 /* Light: white cards on iOS grouped grey. Bulma's scheme-main is the card -- the
@@ -507,7 +527,7 @@ a.navbar-item.is-active {
   width: 100%;
   margin: 0.5em;
   margin-left: 0;
-  font-size: 12px;
+  font-size: var(--bulma-size-small);
 }
 .pagination-page-info b {
   color: var(--bulma-text-strong);
@@ -515,7 +535,7 @@ a.navbar-item.is-active {
 
 input {
   /* prevents mobile zooming */
-  font-size: 16px !important;
+  font-size: max(16px, 1rem) !important;
 }
 
 /* Section headings: Bulma's document scale, stepped down from the page title. */
@@ -592,7 +612,7 @@ td {
      a column may be -- and they are read once rather than scanned down the
      page, which makes them the right thing to shrink. */
   .history-table th {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -631,7 +651,7 @@ td {
 .browse-table .add-song-link {
   min-height: 2.25rem;
   padding-inline: 1em;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 /* Drag and drop highlight */
@@ -824,7 +844,7 @@ td {
     justify-content: center;
     gap: 0.1rem;
     color: var(--bulma-text-weak);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     line-height: 1.2;
   }
   .tab-bar-item .ph {
@@ -844,7 +864,7 @@ td {
     border-radius: var(--bulma-radius-rounded);
     background-color: var(--bulma-danger);
     color: var(--bulma-white);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: var(--bulma-weight-semibold);
     line-height: 1.15rem;
     text-align: center;
@@ -907,7 +927,7 @@ td {
 .section-caption {
   margin: 0 0 0.4rem 0.75rem;
   color: var(--bulma-text-weak);
-  font-size: 0.8rem;
+  font-size: 0.875rem;
 }
 
 /* The player controls: three big glyphs, each over its name. */
@@ -922,7 +942,7 @@ td {
   align-items: center;
   gap: 0.2rem;
   padding-block: 0.4rem;
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 .player-buttons .ph {
   font-size: 2.6rem;
