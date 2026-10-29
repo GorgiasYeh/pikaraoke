@@ -27,13 +27,13 @@
         }
         const segment = path === '/' ? 'home' : path.split('/')[1];
 
-        $('.navbar-item').removeClass('is-active');
+        $('.navbar-item, .tab-bar-item').removeClass('is-active');
 
         // Nav ids are plain words. A path segment that is not one belongs to no
         // nav item, and interpolated into a selector it would throw out of
         // querySelectorAll and abandon the rest of the caller.
         if (/^[\w-]+$/.test(segment)) {
-            $('#' + segment).addClass('is-active');
+            $('#' + segment + ', .tab-bar-item[data-nav="' + segment + '"]').addClass('is-active');
         }
     };
 
@@ -184,23 +184,26 @@
      * This ensures it works reliably across all page transitions
      */
     function initHamburgerMenu() {
+        // The burger and the phone's "More" tab both open the same menu.
+        const toggles = '.navbar-burger, .tab-more';
+
         // Remove any existing handlers first to avoid duplicates
-        $(document).off('click', '.navbar-burger');
+        $(document).off('click', toggles);
 
         // Bind with event delegation
-        $(document).on('click', '.navbar-burger', function(e) {
+        $(document).on('click', toggles, function(e) {
             e.preventDefault();
             e.stopPropagation();
-            $('.navbar-burger').toggleClass('is-active');
+            $(toggles).toggleClass('is-active');
             $('.navbar-menu').toggleClass('is-active');
         });
 
-        // Close the open menu on a click outside it or the burger.
+        // Close the open menu on a click outside it or its toggles.
         $(document).off('click.navbarOutside');
         $(document).on('click.navbarOutside', function(e) {
             if (!$('.navbar-menu').hasClass('is-active')) return;
-            if ($(e.target).closest('.navbar-menu, .navbar-burger').length) return;
-            $('.navbar-burger').removeClass('is-active');
+            if ($(e.target).closest('.navbar-menu, ' + toggles).length) return;
+            $(toggles).removeClass('is-active');
             $('.navbar-menu').removeClass('is-active');
         });
     }
@@ -356,7 +359,7 @@
         isNavigating = true;
 
         // Close hamburger menu if open
-        $('.navbar-burger').removeClass('is-active');
+        $('.navbar-burger, .tab-more').removeClass('is-active');
         $('.navbar-menu').removeClass('is-active');
 
         try {

@@ -32,6 +32,7 @@ _BASE_TEMPLATE_ENDPOINTS = [
     ("/sessions", "sessions.sessions"),
     ("/api/sessions/singers", "sessions_api.get_singers"),
     ("/api/enqueue", "queue_api.enqueue_form"),
+    ("/api/get_queue", "queue_api.get_queue"),
 ]
 
 
@@ -85,6 +86,7 @@ def make_route_app(blueprint, linked_endpoints, admin: bool = True):
         is_admin=lambda: admin,
         has_active_session=lambda: False,
         active_session_name=lambda: "",
+        queue_length=lambda: 0,
     )
     install_auth_gate(app)
     return app

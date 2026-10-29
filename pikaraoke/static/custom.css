@@ -106,13 +106,13 @@
   }
 }
 
-/* Plain buttons are iOS grey fills, a step off the card. Bulma fills them with
-   the surface they sit on and outlines them to compensate; filled, they need no
-   outline, like the coloured buttons. is-outlined sets its own width. Disabled,
-   they keep their fill and Bulma's opacity fades it; Bulma's own disabled fill is
-   scheme-main, the card itself, where a faded button vanishes. */
+/* Plain buttons sit straight on the page's ground, so they are card-coloured
+   fills. Bulma fills them with the surface they sit on and outlines them to
+   compensate; filled, they need no outline, like the coloured buttons.
+   is-outlined sets its own width. Disabled, they keep their fill and Bulma's
+   opacity fades it. */
 .button {
-  --bulma-button-background-l: var(--bulma-scheme-main-ter-l);
+  --bulma-button-background-l: var(--bulma-scheme-main-l);
   --bulma-button-border-width: 0px;
   --bulma-button-disabled-background-color:
     hsl(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-button-background-l));
@@ -139,11 +139,12 @@
   color: var(--bulma-link-text-hover);
 }
 
-/* Cards are inset panels. A card's header is set apart from its body by fill, the
-   page colour, as a modal's is below. */
+/* Cards are iOS grouped sections: one card colour, the header set apart from the
+   body by a hairline. */
 .card {
-  --bulma-card-background-color: var(--bulma-dark);
-  --bulma-card-header-background-color: var(--bulma-body-background-color);
+  --bulma-card-background-color: var(--bulma-scheme-main);
+  --bulma-card-header-background-color: var(--bulma-scheme-main);
+  --bulma-card-header-shadow: inset 0 -1px 0 var(--bulma-border-weak);
   --bulma-card-radius: var(--bulma-radius);
 }
 
@@ -219,15 +220,15 @@ a:not(.button, .navbar-item, .navbar-link, .navbar-burger, .panel-block, .delete
   color: var(--bulma-link-text-hover);
 }
 
-/* Form fields are iOS search-field fills: a step off the card, borderless, with
-   the page's own text. The placeholder is that text at partial alpha, the same
-   pattern Bulma uses for it. */
+/* Form fields sit straight on the page's ground, so they are card-coloured; a
+   hairline keeps one visible where it sits on a card. The text is the page's own,
+   the placeholder that text at partial alpha, the pattern Bulma uses for it. */
 .control,
 .input,
 .select,
 .textarea {
-  --bulma-input-background-l: var(--bulma-scheme-main-ter-l);
-  --bulma-input-border-l: var(--bulma-scheme-main-ter-l);
+  --bulma-input-background-l: var(--bulma-scheme-main-l);
+  --bulma-input-border-l: var(--bulma-border-weak-l);
   --bulma-input-color-l: var(--bulma-text-strong-l);
   --bulma-input-placeholder-color:
     hsla(var(--bulma-text-h), var(--bulma-text-s), var(--bulma-text-weak-l), 0.9);
@@ -342,20 +343,14 @@ input.switch[type="checkbox"]:focus-visible {
 
 /* ===================================
    NAVBAR
-   is-primary paints the bar, its items, the burger menu and the dropdown in the
-   primary navy; these configure the rest.
+   A card-coloured bar, as an iOS toolbar; these configure Bulma's.
    =================================== */
 .navbar {
   border-radius: var(--bulma-radius);
-}
-
-.navbar.is-primary {
   /* The burger reads --bulma-navbar-burger-color, which defaults to the link
-     colour; is-primary only sets a variable an overridden rule consumes. */
+     colour; the bar's other glyphs are text-coloured. */
   --bulma-navbar-burger-color: var(--bulma-navbar-item-color);
-  /* Lines sit the ramp's border step (+15%) lighter than their surface; the divider's
-     surface is the bar's navy. Bulma's default is darker than the bar. */
-  --bulma-navbar-divider-background-l: calc(var(--bulma-primary-l) + 15%);
+  --bulma-navbar-divider-background-l: var(--bulma-border-weak-l);
   /* A text control: hover tints the text and holds the background, as every other
      text control in the app does. */
   --bulma-navbar-item-hover-background-l-delta: 0%;
@@ -391,10 +386,10 @@ input.switch[type="checkbox"]:focus-visible {
   }
 }
 
-/* White text cannot brighten, so hover takes the interactive teal, as does the
-   current page, which spa-navigation.js marks with is-active - the app's only
-   "you are here". Bulma's selected state cannot do it: it changes the item's hue
-   variables, but the text colour is composed on .navbar and inherited finished. */
+/* Hover and the current page, which spa-navigation.js marks with is-active,
+   take the tint - the app's only "you are here". Bulma's selected state cannot do
+   it: it changes the item's hue variables, but the text colour is composed on
+   .navbar and inherited finished. */
 .navbar-item:hover,
 a.navbar-item.is-active {
   color: var(--bulma-link);
@@ -751,4 +746,123 @@ td {
 }
 .has-text-strong {
   color: var(--bulma-text-strong) !important;
+}
+
+/* ===================================
+   PAGE LAYOUT
+   iOS grouped style: the page is the grey (or black) ground, the title sits on
+   it, and the content's own surfaces - tables, cards, fields - are the cards.
+   The box is kept only as the SPA's swap target and the gutter.
+   =================================== */
+.box {
+  --bulma-box-background-color: transparent;
+  --bulma-box-shadow: none;
+}
+
+/* Tables are grouped lists: a card with hairlines between rows, no stripes. */
+.table {
+  border-radius: var(--bulma-radius);
+  overflow: hidden;
+  --bulma-table-striped-row-even-background-color: var(--bulma-scheme-main);
+}
+.table tr:not(:last-child) td {
+  border-bottom: 1px solid var(--bulma-border-weak);
+}
+
+/* ===================================
+   TAB BAR
+   The phone's navigation, an iOS tab bar fixed to the bottom edge. Above the
+   phone breakpoint the navbar carries the same links and the tab bar hides.
+   =================================== */
+.tab-bar {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    /* The bar's own height, plus the home indicator's inset on an iPhone. */
+    --tab-bar-height: calc(3.4rem + env(safe-area-inset-bottom));
+  }
+  body {
+    padding-bottom: var(--tab-bar-height);
+  }
+
+  .tab-bar {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 30;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    height: var(--tab-bar-height);
+    padding-bottom: env(safe-area-inset-bottom);
+    border-top: 1px solid var(--bulma-border-weak);
+    background-color: color-mix(in srgb, var(--bulma-scheme-main-bis) 88%, transparent);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
+  .tab-bar-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    color: var(--bulma-text-weak);
+    font-size: 0.65rem;
+    line-height: 1.2;
+  }
+  .tab-bar-item .ph {
+    font-size: 1.6rem;
+  }
+  .tab-bar-item.is-active,
+  .tab-bar-item:hover {
+    color: var(--bulma-link);
+  }
+  /* The count of waiting songs, an iOS badge on the Queue tab's glyph. */
+  .tab-bar-badge {
+    position: absolute;
+    top: 0.2rem;
+    left: calc(50% + 0.4rem);
+    min-width: 1.15rem;
+    padding: 0 0.3rem;
+    border-radius: var(--bulma-radius-rounded);
+    background-color: var(--bulma-danger);
+    color: var(--bulma-white);
+    font-size: 0.7rem;
+    font-weight: var(--bulma-weight-semibold);
+    line-height: 1.15rem;
+    text-align: center;
+  }
+
+  /* The bar keeps only the singer's name; the tab bar has the rest. */
+  .navbar {
+    --bulma-navbar-background-color: transparent;
+    min-height: 2.5rem;
+  }
+  .navbar-brand > .navbar-item:not(#current-user),
+  .navbar-brand > .navbar-burger {
+    display: none;
+  }
+
+  /* "More" opens the menu as an iOS sheet resting on the tab bar. */
+  .navbar-menu.is-active {
+    position: fixed;
+    inset-inline: 0.5rem;
+    top: auto;
+    bottom: calc(var(--tab-bar-height) + 0.5rem);
+    z-index: 31;
+    border-radius: var(--bulma-radius);
+    background-color: var(--bulma-scheme-main);
+    box-shadow: 0 0.5rem 2rem hsla(0, 0%, 0%, 0.25);
+  }
+  .navbar-menu .navbar-item {
+    min-height: 2.75rem;
+    font-size: 1.05rem;
+  }
+
+  /* Toasts rise from above the tab bar rather than behind it. */
+  .notification-stack {
+    bottom: calc(var(--tab-bar-height) + 0.5rem) !important;
+  }
 }

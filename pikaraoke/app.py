@@ -87,6 +87,7 @@ app.jinja_env.globals.update(
     is_admin=is_admin,
     active_session_name=lambda: get_karaoke_instance().play_history.get_current_session_name(),
     has_active_session=lambda: get_karaoke_instance().play_history.has_active_session(),
+    queue_length=lambda: len(get_karaoke_instance().queue_manager.queue),
 )
 
 # Always initialize flask-smorest Api for error handling (@bp.arguments validation).
