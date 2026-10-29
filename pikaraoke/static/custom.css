@@ -1,83 +1,59 @@
 /* ===================================
    THEME
-   PiKaraoke's palette, said in Bulma's own variables. Bulma derives every
-   component's colours from these.
+   An iOS-style palette, said in Bulma's own variables, following the phone's
+   light or dark setting. Bulma derives every component's colours from these.
+   The splash page pins data-theme="dark" (it plays on a TV) and keeps Bulma's
+   own dark ramp; the scheme blocks below skip it.
    =================================== */
 :root {
-  /* Bulma applies the family to body and to every form control. */
-  --bulma-family-primary: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
-    sans-serif;
+  /* The system face on every device: San Francisco and PingFang on Apple,
+     Noto Sans TC elsewhere. Nothing to download, so it also renders offline. */
+  --bulma-family-primary: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC",
+    "Microsoft JhengHei", "Segoe UI", "Helvetica Neue", sans-serif;
+  /* iOS body text is 17pt; every rem in Bulma scales from this. */
+  --bulma-body-size: 17px;
 
-  /* The neutral ramp. Every page's content sits in one box, so the box is Bulma's
-     scheme-main: the surface Bulma measures its stripes, hovers, lines and borders
-     from. The steps above it are Bulma's own dark-theme offsets, counted from the
-     box, so moving the box moves all of them. The page around the box is the one
-     surface beyond Bulma's ramp. Bulma keeps text on its own hue and saturation,
-     so both pairs are set. */
-  --bulma-scheme-h: 182;
-  --bulma-scheme-s: 7%;
-  --bulma-text-h: 182deg;
-  --bulma-text-s: 7%;
-  --bulma-scheme-main-l: 22%;
-  --bulma-scheme-main-bis-l: calc(var(--bulma-scheme-main-l) + 2%);
-  --bulma-scheme-main-ter-l: calc(var(--bulma-scheme-main-l) + 4%);
-  --bulma-background-l: calc(var(--bulma-scheme-main-l) + 5%);
-  --bulma-border-weak-l: calc(var(--bulma-scheme-main-l) + 12%);
-  --bulma-border-l: calc(var(--bulma-scheme-main-l) + 15%);
-  --bulma-body-background-color:
-    hsl(var(--bulma-scheme-h), var(--bulma-scheme-s), calc(var(--bulma-scheme-main-l) - 9%));
-  --bulma-text-weak-l: 58%;
-  --bulma-text-l: 87%;
-  --bulma-text-strong-l: 95%;
-
+  /* iOS system colours: blue for anything tappable, green for "on" and adding,
+     red for removing. Primary and link are both the tint, as on iOS. */
   --bulma-primary-h: 211deg;
-  --bulma-primary-s: 40%;
-  --bulma-primary-l: 36%;
-  --bulma-link-h: 168deg;
-  --bulma-link-s: 76%;
-  --bulma-link-l: 42%;
-  --bulma-info-h: 204deg;
-  --bulma-info-s: 71%;
-  --bulma-info-l: 53%;
-  /* Add-to-queue's colour on every page: a soft true green, clear of the link teal. */
-  --bulma-success-h: 128deg;
-  --bulma-success-s: 45%;
-  --bulma-success-l: 52%;
-  --bulma-warning-h: 45deg;
-  --bulma-warning-s: 89%;
+  --bulma-primary-s: 100%;
+  --bulma-primary-l: 50%;
+  --bulma-link-h: 211deg;
+  --bulma-link-s: 100%;
+  --bulma-link-l: 50%;
+  --bulma-info-h: 211deg;
+  --bulma-info-s: 100%;
+  --bulma-info-l: 50%;
+  --bulma-success-h: 135deg;
+  --bulma-success-s: 59%;
+  --bulma-success-l: 45%;
+  --bulma-warning-h: 35deg;
+  --bulma-warning-s: 100%;
   --bulma-warning-l: 50%;
-  --bulma-danger-h: 6deg;
-  --bulma-danger-s: 78%;
-  --bulma-danger-l: 57%;
+  --bulma-danger-h: 3deg;
+  --bulma-danger-s: 100%;
+  --bulma-danger-l: 59%;
 
-  /* Bulma picks each accent's ink from a lightness ladder compiled for its own
-     accent, and does not recompute it when the accent changes. Its primary is a
-     luminous turquoise wanting near-black ink; this navy wants white, which is
-     7.2:1 where the baked ink is 2.7:1. The same mismatch runs the other way on
-     the teal, where dark ink replaces white at 2.4:1. */
-  --bulma-primary-invert-l: var(--bulma-primary-100-l);
-  --bulma-link-invert-l: var(--bulma-link-05-l);
-  /* Text in an accent colour is re-lit to stay readable on the page. The navy
-     needs lifting (5.2:1). Links keep the palette teal as it is, so the hover, 5%
-     lighter, lands on the palette's hover teal exactly. */
-  --bulma-primary-on-scheme-l: var(--bulma-primary-60-l);
+  /* Bulma picks each accent's ink from a ladder compiled for its own accent and
+     does not recompute it; the iOS blue wants white ink. */
+  --bulma-primary-invert-l: 100%;
+  --bulma-link-invert-l: 100%;
+  --bulma-info-invert-l: 100%;
+  --bulma-success-invert-l: 100%;
+  --bulma-danger-invert-l: 100%;
+  --bulma-primary-on-scheme-l: var(--bulma-primary-l);
   --bulma-link-on-scheme-l: var(--bulma-link-l);
 
-  /* Inset panels - has-background-dark, cards, the now-playing row - sit one of
-     Bulma's 5% steps below the box, on the ramp's hue rather than Bulma's blue. */
+  /* Inset panels - has-background-dark, the now-playing row - are iOS grouped
+     cells: the card colour, on the page's grey. */
   --bulma-dark-h: var(--bulma-scheme-h);
   --bulma-dark-s: var(--bulma-scheme-s);
-  --bulma-dark-l: calc(var(--bulma-scheme-main-l) - 5%);
+  --bulma-dark-l: var(--bulma-scheme-main-l);
 
-  /* Bulma's dark theme moves a hovered colour 5%, too faint on this ramp to read as a
-     hover; every hover in the app takes its step from these two. */
-  --bulma-hover-color-l-delta: 10%;
-  --bulma-hover-background-l-delta: 10%;
-
-  /* Surfaces are told apart by their fill, not by Bulma's dark-theme glow. */
   --bulma-shadow: none;
 
-  /* One corner radius for every surface and control. */
+  /* iOS rounds grouped cards at 10pt; one radius for every surface and control. */
+  --bulma-radius: 0.625rem;
   --bulma-radius-small: var(--bulma-radius);
   --bulma-radius-medium: var(--bulma-radius);
   --bulma-radius-large: var(--bulma-radius);
@@ -87,13 +63,56 @@
   --bulma-panel-block-hover-background-color: var(--bulma-background);
 }
 
-/* Plain buttons are dark wells, below the page as on master. Bulma fills them with
+/* Light: white cards on iOS grouped grey. Bulma's scheme-main is the card -- the
+   surface it measures stripes, hovers, lines and borders from -- and the page
+   behind the cards is the one surface beyond its ramp. */
+:root:not([data-theme="dark"]) {
+  --bulma-scheme-h: 240;
+  --bulma-scheme-s: 24%;
+  --bulma-text-h: 240deg;
+  --bulma-text-s: 3%;
+  --bulma-scheme-main-l: 100%;
+  --bulma-scheme-main-bis-l: 98%;
+  --bulma-scheme-main-ter-l: 95%;
+  --bulma-background-l: 95%;
+  --bulma-border-weak-l: 92%;
+  --bulma-border-l: 85%;
+  --bulma-body-background-color: hsl(240, 24%, 96%);
+  --bulma-text-weak-l: 50%;
+  --bulma-text-l: 10%;
+  --bulma-text-strong-l: 0%;
+  --bulma-hover-color-l-delta: -10%;
+  --bulma-hover-background-l-delta: -5%;
+}
+
+/* Dark: iOS's elevated grey cards on black. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="dark"]) {
+    --bulma-scheme-s: 3%;
+    --bulma-scheme-main-l: 11%;
+    --bulma-scheme-main-bis-l: 14%;
+    --bulma-scheme-main-ter-l: 17%;
+    --bulma-background-l: 17%;
+    --bulma-border-weak-l: 18%;
+    --bulma-border-l: 24%;
+    --bulma-body-background-color: hsl(240, 3%, 0%);
+    --bulma-text-weak-l: 62%;
+    --bulma-text-l: 92%;
+    --bulma-text-strong-l: 100%;
+    --bulma-link-l: 55%;
+    --bulma-primary-l: 52%;
+    --bulma-hover-color-l-delta: 10%;
+    --bulma-hover-background-l-delta: 6%;
+  }
+}
+
+/* Plain buttons are iOS grey fills, a step off the card. Bulma fills them with
    the surface they sit on and outlines them to compensate; filled, they need no
    outline, like the coloured buttons. is-outlined sets its own width. Disabled,
    they keep their fill and Bulma's opacity fades it; Bulma's own disabled fill is
-   scheme-main, the box itself, where a faded button vanishes. */
+   scheme-main, the card itself, where a faded button vanishes. */
 .button {
-  --bulma-button-background-l: calc(var(--bulma-scheme-main-l) - 13%);
+  --bulma-button-background-l: var(--bulma-scheme-main-ter-l);
   --bulma-button-border-width: 0px;
   --bulma-button-disabled-background-color:
     hsl(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-button-background-l));
@@ -200,20 +219,21 @@ a:not(.button, .navbar-item, .navbar-link, .navbar-burger, .panel-block, .delete
   color: var(--bulma-link-text-hover);
 }
 
-/* Form fields stay white on the dark page, so the colours Bulma derives for them
-   from the dark scheme - text, placeholder and icon, all near-white - are taken
-   from the field instead. The placeholder is the field's own text at partial
-   alpha, the same pattern Bulma uses for it. */
+/* Form fields are iOS search-field fills: a step off the card, borderless, with
+   the page's own text. The placeholder is that text at partial alpha, the same
+   pattern Bulma uses for it. */
 .control,
 .input,
 .select,
 .textarea {
-  --bulma-input-background-l: var(--bulma-white-l);
-  --bulma-input-color-l: var(--bulma-dark-l);
+  --bulma-input-background-l: var(--bulma-scheme-main-ter-l);
+  --bulma-input-border-l: var(--bulma-scheme-main-ter-l);
+  --bulma-input-color-l: var(--bulma-text-strong-l);
   --bulma-input-placeholder-color:
-    hsla(var(--bulma-input-h), var(--bulma-input-s), var(--bulma-input-color-l), 0.7);
+    hsla(var(--bulma-text-h), var(--bulma-text-s), var(--bulma-text-weak-l), 0.9);
   --bulma-input-icon-color: var(--bulma-input-placeholder-color);
   --bulma-input-icon-hover-color: var(--bulma-input-placeholder-color);
+  --bulma-input-shadow: none;
 }
 
 /* Firefox applies its own default placeholder opacity on top of the colour. */
@@ -495,7 +515,7 @@ a.navbar-item.is-active {
   font-size: 12px;
 }
 .pagination-page-info b {
-  color: var(--bulma-white);
+  color: var(--bulma-text-strong);
 }
 
 input {
@@ -503,8 +523,7 @@ input {
   font-size: 16px !important;
 }
 
-/* Section headings: Bulma's document scale, stepped down from the page title
-   and bold (Lato has no 800 face). */
+/* Section headings: Bulma's document scale, stepped down from the page title. */
 .box :is(h2, h3, h4, h5, h6) {
   color: var(--bulma-text-strong);
   font-weight: var(--bulma-weight-bold);
@@ -589,7 +608,7 @@ td {
 }
 
 /* The cog is deliberately dim until pointed at, so a column of them does not
-   compete with the rows. !important because it carries has-text-grey-light,
+   compete with the rows. !important because it carries has-text-weak,
    and Bulma's colour helpers are themselves !important. */
 .row-options-btn:hover {
   color: var(--bulma-text-strong) !important;
@@ -631,9 +650,8 @@ td {
 
 /* A div, not <progress>, so the fill can transition; the duration matches the poll. */
 .dl-bar {
-  /* A lighter grey on the card's has-background-dark, so the empty track shows
-     before the fill covers it. */
-  background-color: var(--bulma-grey-dark);
+  /* The border grey, so the empty track shows on the card before the fill covers it. */
+  background-color: var(--bulma-border);
   border-radius: var(--bulma-radius-rounded);
   height: 8px;
   overflow: hidden;
@@ -720,8 +738,17 @@ td {
 }
 
 .dl-meta-rate {
-  color: var(--bulma-grey-light);
+  color: var(--bulma-text-weak);
   display: flex;
   font-variant-numeric: tabular-nums;
   gap: 12px;
+}
+
+/* Bulma's grey and white text helpers are fixed colours, right for one scheme
+   only. These track the theme's own weak and strong text instead. */
+.has-text-weak {
+  color: var(--bulma-text-weak) !important;
+}
+.has-text-strong {
+  color: var(--bulma-text-strong) !important;
 }

@@ -156,14 +156,14 @@
     html += '<td>';
     html += '<div class="is-flex is-flex-wrap-wrap is-align-items-baseline">';
     html += '<span>' + np.now_playing_user + '</span>';
-    html += '<span class="is-hidden-mobile has-text-grey-light mx-2">&bull;</span>';
-    html += '<span class="has-text-weight-bold has-text-white is-hidden-mobile">' + np.now_playing + '</span>';
-    html += '<span class="is-size-7 has-text-weight-bold has-text-white is-hidden-tablet" style="width: 100%;">' + np.now_playing + '</span>';
+    html += '<span class="is-hidden-mobile has-text-weak mx-2">&bull;</span>';
+    html += '<span class="has-text-weight-bold has-text-strong is-hidden-mobile">' + np.now_playing + '</span>';
+    html += '<span class="is-size-7 has-text-weight-bold has-text-strong is-hidden-tablet" style="width: 100%;">' + np.now_playing + '</span>';
     html += '</div></td>';
 
     if (isAdmin) {
       html += '<td class="has-text-right">';
-      html += '<a class="has-text-grey-light row-options-btn now-playing-options-btn" title="{{ _("Options") | forceescape }}">';
+      html += '<a class="has-text-weak row-options-btn now-playing-options-btn" title="{{ _("Options") | forceescape }}">';
       html += '<span class="icon is-medium"><i class="ph ph-dots-three-vertical"></i></span></a>';
       html += '</td>';
     }
@@ -277,7 +277,7 @@
                       : `<span class="tag is-light ml-auto">{{ _('Queued') | forceescape }}</span>`;
                   html += `
                       <div class="box mb-2 p-3 has-background-dark is-flex is-align-items-center">
-                          <span class="has-text-grey-light">${d.display_title || d.video_url}</span>
+                          <span class="has-text-weak">${d.display_title || d.video_url}</span>
                           ${tag}
                       </div>
                   `;
@@ -292,7 +292,7 @@
                       <div class="box mb-2 p-3 is-flex is-align-items-center" style="border-left: 4px solid var(--bulma-danger);">
                           <span class="icon has-text-danger mr-2"><i class="ph ph-x"></i></span>
                           <div class="is-flex-grow-1" style="min-width: 0;">
-                              <p class="has-text-grey-light mb-0" title="${d.title || d.url}">${d.title || d.url}</p>
+                              <p class="has-text-weak mb-0" title="${d.title || d.url}">${d.title || d.url}</p>
                               <p class="help is-danger mb-0" title="${d.error}">${d.error}</p>
                           </div>
                           <span class="tag is-danger is-light ml-2">{{ _('Failed') | forceescape }}</span>
@@ -368,21 +368,21 @@
 
     if (isAdmin) {
       html += '<td class="drag-handle has-text-centered" style="cursor: grab; touch-action: none;" title="{{ _("Drag to reorder") | forceescape }}">';
-      html += '<span class="icon"><i class="ph ph-dots-six-vertical has-text-grey-light"></i></span>';
+      html += '<span class="icon"><i class="ph ph-dots-six-vertical has-text-weak"></i></span>';
       html += '</td>';
     }
 
     html += '<td>';
     html += '<div class="is-flex is-flex-wrap-wrap is-align-items-baseline">';
     html += '<span>' + e.user + '</span>';
-    html += '<span class="is-hidden-mobile has-text-grey-light mx-2">&bull;</span>';
+    html += '<span class="is-hidden-mobile has-text-weak mx-2">&bull;</span>';
     html += '<span class="is-hidden-mobile">' + e.title + '</span>';
     html += '<span class="is-size-7 is-hidden-tablet" style="width: 100%;">' + e.title + '</span>';
     html += '</div></td>';
 
     if (isAdmin) {
       html += '<td class="has-text-right">';
-      html += '<a class="has-text-grey-light row-options-btn queue-song-options-btn" data-index="' + index + '" data-file="' + escape(e.file) + '" data-title="' + escape(e.title) + '" title="{{ _("Options") | forceescape }}">';
+      html += '<a class="has-text-weak row-options-btn queue-song-options-btn" data-index="' + index + '" data-file="' + escape(e.file) + '" data-title="' + escape(e.title) + '" title="{{ _("Options") | forceescape }}">';
       html += '<span class="icon is-medium"><i class="ph ph-dots-three-vertical"></i></span></a>';
       html += '</td>';
     }

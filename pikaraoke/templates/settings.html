@@ -175,7 +175,7 @@
 			var list = $("#mic-list");
 			list.empty();
 			if (devices.length === 0) {
-				list.html('<p class="has-text-grey-light">{{ _("No microphones detected. Connect a USB or Bluetooth mic and click Refresh.") | forceescape }}</p>');
+				list.html('<p class="has-text-weak">{{ _("No microphones detected. Connect a USB or Bluetooth mic and click Refresh.") | forceescape }}</p>');
 				$("#mic-settings-panel").hide();
 				return;
 			}
@@ -331,7 +331,7 @@
 						</div>
 					</form>
 					{# MSG: Tells a locked-out host how to reset a forgotten admin password. #}
-					<p class="is-size-7 has-text-grey-light">{% trans %}Forgotten it? Restart PiKaraoke with --admin-password to set a new one.{% endtrans %}</p>
+					<p class="is-size-7 has-text-weak">{% trans %}Forgotten it? Restart PiKaraoke with --admin-password to set a new one.{% endtrans %}</p>
 				</div>
 			</div>
 		</div>
@@ -345,7 +345,7 @@
 					{# MSG: Header of the settings section for the screen the videos play on, usually a TV, and what it shows between songs. #}
 					<h3 class="m-0">{% trans %}Splash screen{% endtrans %}</h3>
 					{# MSG: One-line summary under the Splash screen heading, naming the controls inside it. #}
-					<span class="section-summary is-size-7 has-text-grey-light">{% trans %}Logo, clock, screensaver and overlays{% endtrans %}</span>
+					<span class="section-summary is-size-7 has-text-weak">{% trans %}Logo, clock, screensaver and overlays{% endtrans %}</span>
 				</div>
 			</header>
 			<div class="collapsible-content panel is-shadowless mb-0">
@@ -368,7 +368,7 @@
 				<label class="panel-block px-5 py-3 is-justify-content-space-between">
 					<span>
 						{# MSG: Checkbox label which enable/disables showing overlay data on the splash screen #} {% trans %}Hide all overlays{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}Now playing, up next and the QR code.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}Now playing, up next and the QR code.{% endtrans %}</span>
 					</span>
 					<input id="pref-overlay" type="checkbox" class="user-preference-checkbox switch ml-4 mr-0" data-pref="hide_overlay" {% if hide_overlay == True %}checked{% endif %}>
 				</label>
@@ -383,14 +383,14 @@
 				<div class="panel-block px-5 py-3 is-justify-content-space-between">
 					<label for="pref-screensaver-timeout">
 						{# MSG: Numberbox label for setting the inactive delay before showing the screensaver #} {% trans %}Screensaver after (seconds){% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}0 turns it off.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}0 turns it off.{% endtrans %}</span>
 					</label>
 					<input id="pref-screensaver-timeout" class="user-preference-input input is-flex-shrink-0 ml-4" type="number" min="0" max="999" data-pref="screensaver_timeout" data-start-value="{{ screensaver_timeout }}" value="{{ screensaver_timeout }}" />
 				</div>
 				<div class="panel-block px-5 py-3 is-justify-content-space-between">
 					<label for="pref-splash-scale">
 						{# MSG: Numberbox label for setting how large the text and overlays on the splash screen are drawn #} {% trans %}Size of the overlays{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}1 is normal size, 1.5 suits a large TV.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}1 is normal size, 1.5 suits a large TV.{% endtrans %}</span>
 					</label>
 					<input id="pref-splash-scale" class="user-preference-input input is-flex-shrink-0 ml-4" type="number" min="0.5" max="4" step="0.1" data-pref="splash_scale" data-start-value="{{ splash_scale }}" value="{{ splash_scale }}" />
 				</div>
@@ -403,7 +403,7 @@
 					{# MSG: Header of the settings section for the music and video the splash screen plays between songs. #}
 					<h3 class="m-0">{% trans %}Background music and video{% endtrans %}</h3>
 					{# MSG: One-line summary under the Background music and video heading, naming the controls inside it. #}
-					<span class="section-summary is-size-7 has-text-grey-light">{% trans %}Idle-time music, video and volume{% endtrans %}</span>
+					<span class="section-summary is-size-7 has-text-weak">{% trans %}Idle-time music, video and volume{% endtrans %}</span>
 				</div>
 			</header>
 			<div class="collapsible-content panel is-shadowless mb-0">
@@ -418,7 +418,7 @@
 				<div class="panel-block px-5 py-3 is-justify-content-space-between">
 					<label for="bg-music-volume">
 						{# MSG: Numberbox label for setting the background music volume#} {% trans %}Background music volume{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}0 to 100.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}0 to 100.{% endtrans %}</span>
 					</label>
 					<input id="bg-music-volume" class="user-preference-input input is-flex-shrink-0 ml-4" type="number" min="0" max="100" step="5" data-pref="bg_music_volume" data-start-value="{{ bg_music_volume }}" value="{{ bg_music_volume }}" />
 				</div>
@@ -431,14 +431,14 @@
 					{# MSG: Header of the settings section for how a song is played: volume, transcoding and microphones. #}
 					<h3 class="m-0">{% trans %}Playback and audio{% endtrans %}</h3>
 					{# MSG: One-line summary under the Playback and audio heading, naming the controls inside it. #}
-					<span class="section-summary is-size-7 has-text-grey-light">{% trans %}Volume, next-song delay, transcoding and mics{% endtrans %}</span>
+					<span class="section-summary is-size-7 has-text-weak">{% trans %}Volume, next-song delay, transcoding and mics{% endtrans %}</span>
 				</div>
 			</header>
 			<div class="collapsible-content panel is-shadowless mb-0">
 				<div class="panel-block px-5 py-3 is-justify-content-space-between">
 					<label for="pref-volume">
 						{# MSG: Numberbox label for setting the default video volume#} {% trans %}Default volume{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}0 to 100.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}0 to 100.{% endtrans %}</span>
 					</label>
 					<input id="pref-volume" class="user-preference-input input is-flex-shrink-0 ml-4" type="number" min="0" max="100" step="5" data-pref="volume" data-start-value="{{ volume }}" value="{{ volume }}" />
 				</div>
@@ -453,28 +453,28 @@
 				<label class="panel-block px-5 py-3 is-justify-content-space-between">
 					<span>
 						{# MSG: Checkbox label which enable/disables full transcode before playback #} {% trans %}Transcode fully before playing{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}Better browser compatibility, slower starts. Ignores the buffer size.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}Better browser compatibility, slower starts. Ignores the buffer size.{% endtrans %}</span>
 					</span>
 					<input id="pref-complete_transcode_before_play" type="checkbox" class="user-preference-checkbox switch ml-4 mr-0" data-pref="complete_transcode_before_play" {% if complete_transcode_before_play == True %}checked{% endif %}>
 				</label>
 				<div class="panel-block px-5 py-3 is-justify-content-space-between">
 					<label for="pref-buffer-size">
 						{# MSG: Numberbox label for setting the buffer size in kilobytes #} {% trans %}Buffer size (kilobytes){% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}How much of a video is transcoded before it is sent to the screen.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}How much of a video is transcoded before it is sent to the screen.{% endtrans %}</span>
 					</label>
 					<input id="pref-buffer-size" class="user-preference-input input is-flex-shrink-0 ml-4" type="number" min="0" max="9999" data-pref="buffer_size" data-start-value="{{ buffer_size }}" value="{{ buffer_size }}" />
 				</div>
 				<div class="panel-block px-5 py-3 is-justify-content-space-between">
 					<label for="pref-avsync">
 						{# MSG: Numberbox label for audio video synchronization #} {% trans %}Audio delay (seconds){% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}Negative plays the audio earlier, positive later.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}Negative plays the audio earlier, positive later.{% endtrans %}</span>
 					</label>
 					<input id="pref-avsync" class="user-preference-input input is-flex-shrink-0 ml-4" type="number" step="0.1" min="-10" max="10" data-pref="avsync" data-start-value="{{ avsync }}" value="{{ avsync }}" />
 				</div>
 				<label class="panel-block px-5 py-3 is-justify-content-space-between">
 					<span>
 						{# MSG: Checkbox label which enable/disables CDG pixel scaling #} {% trans %}Enable CDG pixel scaling{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}Crisper visuals for CDG files, may increase CPU usage.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}Crisper visuals for CDG files, may increase CPU usage.{% endtrans %}</span>
 					</span>
 					<input id="pref-cdg-scaling" type="checkbox" class="user-preference-checkbox switch ml-4 mr-0" data-pref="cdg_pixel_scaling" {% if cdg_pixel_scaling == True %}checked{% endif %}>
 				</label>
@@ -482,11 +482,11 @@
 				<div class="panel-block is-block p-5">
 					{% if mic_available %}
 					<h5 class="mb-2">{% trans %}Microphones{% endtrans %}</h5>
-					<p class="is-size-7 has-text-grey-light mb-2">
+					<p class="is-size-7 has-text-weak mb-2">
 						{% trans %}Microphones detected on the server. Audio is routed directly to speakers.{% endtrans %}
 					</p>
 					<div id="mic-list">
-						<p class="has-text-grey-light">{% trans %}No microphones detected. Connect a USB or Bluetooth mic and click Refresh.{% endtrans %}</p>
+						<p class="has-text-weak">{% trans %}No microphones detected. Connect a USB or Bluetooth mic and click Refresh.{% endtrans %}</p>
 					</div>
 
 					<div id="mic-settings-panel" style="display: none;">
@@ -502,7 +502,7 @@
 							{% trans %}Echo cancellation{% endtrans %}
 						</label>
 						<span class="tag is-warning is-light ml-2">{% trans %}Experimental{% endtrans %}</span>
-						<span class="is-size-7 has-text-grey-light ml-2">{% trans %}(reduces feedback, adds latency){% endtrans %}</span>
+						<span class="is-size-7 has-text-weak ml-2">{% trans %}(reduces feedback, adds latency){% endtrans %}</span>
 					</div>
 					{% endif %}
 					</div>
@@ -512,7 +512,7 @@
 					<p class="has-text-warning">
 						{% trans %}Microphone support is unavailable. Required audio tools are not installed.{% endtrans %}
 					</p>
-					<p class="is-size-7 has-text-grey-light">
+					<p class="is-size-7 has-text-weak">
 						{% trans %}On Linux / Raspberry Pi, install it with:{% endtrans %}
 						<code>sudo apt install pulseaudio-utils</code>
 						{% trans %}and restart PiKaraoke.{% endtrans %}
@@ -529,28 +529,28 @@
 					{# MSG: Header of the settings section for the rules of the song queue. #}
 					<h3 class="m-0">{% trans %}Queue{% endtrans %}</h3>
 					{# MSG: One-line summary under the Queue heading, naming the controls inside it. #}
-					<span class="section-summary is-size-7 has-text-grey-light">{% trans %}Autoplay, songs per singer and fair queue{% endtrans %}</span>
+					<span class="section-summary is-size-7 has-text-weak">{% trans %}Autoplay, songs per singer and fair queue{% endtrans %}</span>
 				</div>
 			</header>
 			<div class="collapsible-content panel is-shadowless mb-0">
 				<label class="panel-block px-5 py-3 is-justify-content-space-between">
 					<span>
 						{# MSG: Checkbox label for playing the next queued song automatically #} {% trans %}Autoplay{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}Play the next song automatically.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}Play the next song automatically.{% endtrans %}</span>
 					</span>
 					<input id="pref-autoplay" type="checkbox" class="user-preference-checkbox switch ml-4 mr-0" data-pref="autoplay" {% if autoplay == True %}checked{% endif %}>
 				</label>
 				<div class="panel-block px-5 py-3 is-justify-content-space-between">
 					<label for="pref-limit-user-songs-by">
 						{# MSG: Numberbox label for limitting the number of songs for each player #} {% trans %}Songs per singer{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}0 for no limit.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}0 for no limit.{% endtrans %}</span>
 					</label>
 					<input id="pref-limit-user-songs-by" class="user-preference-input input is-flex-shrink-0 ml-4" type="number" min="0" max="99" data-pref="limit_user_songs_by" data-start-value="{{ limit_user_songs_by }}" value="{{ limit_user_songs_by }}" />
 				</div>
 				<label class="panel-block px-5 py-3 is-justify-content-space-between">
 					<span>
 						{# MSG: Checkbox label which enable/disables fair queue (round-robin) mode #} {% trans %}Enable fair queue{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}Round-robin: singers take turns.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}Round-robin: singers take turns.{% endtrans %}</span>
 					</span>
 					<input id="pref-fair-queue" type="checkbox" class="user-preference-checkbox switch ml-4 mr-0" data-pref="enable_fair_queue" {% if enable_fair_queue == True %}checked{% endif %}>
 				</label>
@@ -563,7 +563,7 @@
 					{# MSG: Header of the settings section for the score screen shown after each song. #}
 					<h3 class="m-0">{% trans %}Scoring{% endtrans %}</h3>
 					{# MSG: One-line summary under the Scoring heading, naming the controls inside it. #}
-					<span class="section-summary is-size-7 has-text-grey-light">{% trans %}The score screen and its phrases{% endtrans %}</span>
+					<span class="section-summary is-size-7 has-text-weak">{% trans %}The score screen and its phrases{% endtrans %}</span>
 				</div>
 			</header>
 			<div class="collapsible-content panel is-shadowless mb-0">
@@ -573,7 +573,7 @@
 				</label>
 				<div class="panel-block is-block p-5">
 					{# MSG: Help text explaining how to add phrases #}
-					<p class="is-size-7 has-text-grey-light mt-1">{% trans %}Add one phrase per line in each box and hit save.{% endtrans %}</p>
+					<p class="is-size-7 has-text-weak mt-1">{% trans %}Add one phrase per line in each box and hit save.{% endtrans %}</p>
 					{# MSG: Title for LOW Score Phrases #}
 					<h5>{% trans %}LOW Score Phrases (score < 30){% endtrans %}</h5>
 					{# MSG: Placeholder for the low score phrases textarea #}
@@ -598,7 +598,7 @@
 					{# MSG: Header of the settings section for how songs download and how the Songs page shows them. #}
 					<h3 class="m-0">{% trans %}Song display and downloading{% endtrans %}</h3>
 					{# MSG: One-line summary under the Song display and downloading heading, naming the controls inside it. #}
-					<span class="section-summary is-size-7 has-text-grey-light">{% trans %}Download quality, title cleanup and the Songs page{% endtrans %}</span>
+					<span class="section-summary is-size-7 has-text-weak">{% trans %}Download quality, title cleanup and the Songs page{% endtrans %}</span>
 				</div>
 			</header>
 			<div class="collapsible-content panel is-shadowless mb-0">
@@ -609,7 +609,7 @@
 				<label class="panel-block px-5 py-3 is-justify-content-space-between">
 					<span>
 						{# MSG: Checkbox label which enables browsing the song library by folder #} {% trans %}Enable folder browsing{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}Adds a Folders view to the Songs page when the library has subfolders.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}Adds a Folders view to the Songs page when the library has subfolders.{% endtrans %}</span>
 					</span>
 					<input id="pref-enable-folder-browsing" type="checkbox" class="user-preference-checkbox switch ml-4 mr-0" data-pref="enable_folder_browsing" {% if enable_folder_browsing == True %}checked{% endif %}>
 				</label>
@@ -626,7 +626,7 @@
 				<label class="panel-block px-5 py-3 is-justify-content-space-between">
 					<span>
 						{# MSG: Checkbox label which enables automatic cleanup of YouTube song titles #} {% trans %}Enable automatic YouTube title cleanup{% endtrans %}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}Strips noise words like "Karaoke Version HD".{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}Strips noise words like "Karaoke Version HD".{% endtrans %}</span>
 					</span>
 					<input id="pref-enable-title-tidy" type="checkbox" class="user-preference-checkbox switch ml-4 mr-0" data-pref="enable_title_tidy" {% if enable_title_tidy == True %}checked{% endif %}>
 				</label>
@@ -644,7 +644,7 @@
 					<h3 class="m-0">{% trans %}Database{% endtrans %}</h3>
 					{# MSG: One-line summary under the Database heading. Kept general on purpose,
 					   so it still fits as backup, restore and metadata tools join the section. #}
-					<span class="section-summary is-size-7 has-text-grey-light">{% trans %}The song database and its upkeep{% endtrans %}</span>
+					<span class="section-summary is-size-7 has-text-weak">{% trans %}The song database and its upkeep{% endtrans %}</span>
 				</div>
 			</header>
 			<div class="collapsible-content panel is-shadowless mb-0">
@@ -653,7 +653,7 @@
 						{# MSG: Song count display in the database section. #}
 						{% trans %}Songs in database:{% endtrans %} <strong id="library-song-count">...</strong>
 						{# MSG: Help text explaining what Sync Now does. #}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}Reconciles the library with the song directory in the background.{% endtrans %}</span>
+						<span class="is-block is-size-7 has-text-weak">{% trans %}Reconciles the library with the song directory in the background.{% endtrans %}</span>
 					</span>
 					{# MSG: Button to trigger a background library scan. #}
 					<button id="sync-library-btn" class="button is-primary is-flex-shrink-0 ml-4">{% trans %}Sync Now{% endtrans %}</button>
@@ -688,7 +688,7 @@
 					{# MSG: Header of the settings section for the interface language and the computer running Pikaraoke. #}
 					<h3 class="m-0">{% trans %}System{% endtrans %}</h3>
 					{# MSG: One-line summary under the System heading, naming the controls inside it. #}
-					<span class="section-summary is-size-7 has-text-grey-light">{% trans %}Language, keep-awake and yt-dlp updates{% endtrans %}</span>
+					<span class="section-summary is-size-7 has-text-weak">{% trans %}Language, keep-awake and yt-dlp updates{% endtrans %}</span>
 				</div>
 			</header>
 			<div class="collapsible-content panel is-shadowless mb-0">
@@ -703,7 +703,7 @@
 					</div>
 				</div>
 				{% if keep_awake_unsupported %}
-				<div class="panel-block px-5 py-3 is-size-7 has-text-grey-light">
+				<div class="panel-block px-5 py-3 is-size-7 has-text-weak">
 					{% if keep_awake_unsupported == "container" %}
 					{# MSG: Shown instead of the keep-awake checkbox when running in a container. #} {% trans %}Keep the server awake: unavailable in a container. Disable sleep on the host.{% endtrans %}
 					{% elif keep_awake_unsupported == "missing_tool" %}
@@ -725,7 +725,7 @@
 						{# MSG: Label for the YT-DLP update on the updates section #}
 						{% trans %}YT-DLP update{% endtrans %}
 						{# MSG: Text explaining why you might want to update yt-dlp. #}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans %}
+						<span class="is-block is-size-7 has-text-weak">{% trans %}
 						If downloads or searches stopped working, updating yt-dlp will probably fix it.<br/>
 						The current installed version is: "{{ youtubedl_version }}".
 					{% endtrans %}</span>
@@ -745,7 +745,7 @@
 						{# MSG: Title for section containing a few other options on the Info page. #}
 						{% trans %}Expand Raspberry Pi filesystem{% endtrans %}
 						{# MSG: Explainitory text which explains why you might want to expand the filesystem. #}
-						<span class="is-block is-size-7 has-text-grey-light">{% trans -%}
+						<span class="is-block is-size-7 has-text-weak">{% trans -%}
 							If you just installed the pre-built pikaraoke pi image and your SD card is larger than 4GB,
 							you may want to expand the filesystem to utilize the remaining space. You only need to do this once.
 							This will reboot the system.

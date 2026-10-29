@@ -65,7 +65,7 @@
 		if (!wasSkipped(play)) {
 			return statusIcon("ph-check", "has-text-success", historyText.played);
 		}
-		return statusIcon("ph-skip-forward", "has-text-grey-light", historyText.skipped);
+		return statusIcon("ph-skip-forward", "has-text-weak", historyText.skipped);
 	}
 
 	// The log only knows the song is unended; playing-vs-paused is the live player's.
@@ -188,7 +188,7 @@
 							) +
 							'<td class="has-text-centered' + (play.has_ended ? '' : ' js-live-status') + '">' + playStatus(play) + "</td>" +
 							'<td class="has-text-right">' +
-								'<a class="has-text-grey-light row-options-btn" data-id="' + play.id +
+								'<a class="has-text-weak row-options-btn" data-id="' + play.id +
 									'" data-song="' + escapeHtml(play.song) +
 									'" data-path="' + escapeHtml(play.file_path) +
 									'" title="{{ _("Options") | forceescape }}">' +
@@ -347,7 +347,7 @@
 	   Bulma's colour helpers are !important -- which is right: the actions on a
 	   skipped row are as available as on any other. */
 	#play-log tr.is-skipped td {
-		color: var(--bulma-grey-light);
+		color: var(--bulma-text-weak);
 	}
 	/* Widths are declared here rather than left to the contents: the song column
 	   is the only one without one, so it absorbs the slack and the three columns
@@ -391,7 +391,7 @@
 			width: 2em;
 		}
 		#play-log td.when {
-			color: var(--bulma-grey-light);
+			color: var(--bulma-text-weak);
 		}
 	}
 </style>
@@ -441,7 +441,7 @@
 	{% endif %}
 
 	{# Off by default, so the log shows every attempt. See hideSkippedPlays. #}
-	<label class="checkbox is-size-7 is-inline-flex is-align-items-center is-gap-0.5 ml-auto has-text-grey-light">
+	<label class="checkbox is-size-7 is-inline-flex is-align-items-center is-gap-0.5 ml-auto has-text-weak">
 		<input type="checkbox" class="switch" id="hide-skipped" />
 		{# MSG: Checkbox which hides songs that were skipped before they finished. #}
 		{% trans %}Hide skipped{% endtrans %}
@@ -495,7 +495,7 @@
 				{# MSG: Menu item which adds the song from this play log entry to the queue. #}
 				{% trans %}Add to queue{% endtrans %}
 			</a>
-			<span id="opt-song-gone" class="panel-block py-3 has-text-grey-light">
+			<span id="opt-song-gone" class="panel-block py-3 has-text-weak">
 				<span class="icon mr-2"><i class="ph ph-info"></i></span>
 				{# MSG: Shown in place of "add to queue" when the song has since been removed from the library. #}
 				{% trans %}This song is no longer in the library{% endtrans %}

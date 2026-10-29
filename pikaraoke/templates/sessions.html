@@ -147,7 +147,7 @@
 						whenCell(session.started_at) +
 						'<td class="has-text-right">' + session.play_count + "</td>" +
 						'<td class="has-text-right">' +
-							'<a class="has-text-grey-light row-options-btn" data-uuid="' +
+							'<a class="has-text-weak row-options-btn" data-uuid="' +
 								escapedUuid + '" data-label="' + escapeHtml(label) +
 								'" data-unnamed="' + (isUnnamed ? "1" : "") +
 								'" title="{{ _("Options") | forceescape }}">' +
@@ -475,7 +475,7 @@
 	   aria-expanded so open/shut is held in one place. */
 	.session-chevron {
 		font-size: 0.7em;
-		color: var(--bulma-grey-light);
+		color: var(--bulma-text-weak);
 	}
 	.session-chevron:before {
 		margin-right: 0.7em;
@@ -508,7 +508,7 @@
 	/* The row label is a number PiKaraoke assigned, not a name anyone chose. */
 	.is-unnamed-session .session-name {
 		font-style: italic;
-		color: var(--bulma-grey-light);
+		color: var(--bulma-text-weak);
 	}
 	/* The panel belongs to the row above it, on an inset background. */
 	.singers-row > td {
@@ -560,7 +560,7 @@
 			width: 2em;
 		}
 		#session-list td.when {
-			color: var(--bulma-grey-light);
+			color: var(--bulma-text-weak);
 		}
 	}
 </style>
@@ -610,7 +610,7 @@
    holds the checkbox to the right edge. #}
 <div class="is-flex is-align-items-center is-flex-wrap-wrap is-row-gap-1 is-column-gap-1.5 mb-2">
 	{# Off by default, so the list shows every night on record. See hideAutoStarted. #}
-	<label class="checkbox is-size-7 is-inline-flex is-align-items-center is-gap-0.5 ml-auto has-text-grey-light">
+	<label class="checkbox is-size-7 is-inline-flex is-align-items-center is-gap-0.5 ml-auto has-text-weak">
 		<input type="checkbox" class="switch" id="hide-auto-started" />
 		{# MSG: Checkbox which hides the sessions PiKaraoke started on its own, which the host never named. #}
 		{% trans %}Hide auto-started{% endtrans %}
