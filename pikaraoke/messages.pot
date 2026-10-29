@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-30 06:56+0800\n"
+"POT-Creation-Date: 2026-10-30 06:58+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -276,8 +276,8 @@ msgstr ""
 
 #. Title of the page listing the songs already on this machine.
 #. Navigation link for the page listing songs already on this machine.
-#: routes/files.py:190 templates/base.html:505 templates/base.html:508
-#: templates/base.html:584
+#: routes/files.py:190 templates/base.html:538 templates/base.html:541
+#: templates/base.html:617
 msgid "Songs"
 msgstr ""
 
@@ -331,13 +331,13 @@ msgid "Renamed file: %s to %s"
 msgstr ""
 
 #. Title of the home page, which shows the song playing now.
-#: routes/home.py:26 templates/base.html:580
+#: routes/home.py:26 templates/base.html:613
 msgid "Now Playing"
 msgstr ""
 
 #. Title of the page with the QR code to join and the system information.
 #. Menu link to the page with the QR code to join and the system information.
-#: routes/info.py:28 templates/base.html:567
+#: routes/info.py:28 templates/base.html:600
 msgid "Info"
 msgstr ""
 
@@ -348,8 +348,8 @@ msgstr ""
 #. Title of the queue page.
 #. Navigation link for the queue page.
 #. Header of the settings section for the rules of the song queue.
-#: routes/queue.py:28 templates/base.html:496 templates/base.html:498
-#: templates/base.html:588 templates/settings.html:530
+#: routes/queue.py:28 templates/base.html:529 templates/base.html:531
+#: templates/base.html:621 templates/settings.html:530
 msgid "Queue"
 msgstr ""
 
@@ -369,26 +369,26 @@ msgstr ""
 
 #. Title of the page used to get new songs into the library.
 #. Navigation link for the page used to get new songs into the library.
-#: routes/search.py:47 templates/base.html:511 templates/base.html:514
-#: templates/base.html:593
+#: routes/search.py:47 templates/base.html:544 templates/base.html:547
+#: templates/base.html:626
 msgid "Add New"
 msgstr ""
 
 #. Title of the session management page.
 #. Menu link to the karaoke session management page, only shown to the host.
-#: routes/sessions.py:64 templates/base.html:555
+#: routes/sessions.py:64 templates/base.html:588
 msgid "Sessions"
 msgstr ""
 
 #. Title of the page logging everything that has been sung.
 #. Menu link to the log of everything that has been sung.
-#: routes/sessions.py:81 templates/base.html:549
+#: routes/sessions.py:81 templates/base.html:582
 msgid "Play History"
 msgstr ""
 
 #. Title of the most-played songs and most active singers page.
 #. Menu link to the most-played songs and most active singers.
-#: routes/sessions.py:104 templates/base.html:544
+#: routes/sessions.py:104 templates/base.html:577
 msgid "Rankings"
 msgstr ""
 
@@ -433,7 +433,7 @@ msgstr ""
 
 #. Title of the settings page.
 #. Menu link to the settings and host controls page.
-#: routes/settings.py:33 templates/base.html:561
+#: routes/settings.py:33 templates/base.html:594
 msgid "Settings"
 msgstr ""
 
@@ -517,44 +517,55 @@ msgstr ""
 msgid "This name is visible to everyone."
 msgstr ""
 
-#. Confirmation prompt to clear entire queue. User must type ok to confirm
+#. Title of the dialog that asks a guest's name the first time they open
+#. PiKaraoke.
 #: templates/base.html:46
+msgid "Welcome! Let's sing"
+msgstr ""
+
+#. Text in the first-visit dialog explaining why the guest's name is asked for.
+#: templates/base.html:48
+msgid "Tell everyone who you are, so they know who picked each song."
+msgstr ""
+
+#. Confirmation prompt to clear entire queue. User must type ok to confirm
+#: templates/base.html:50
 msgid "Are you sure you want to clear the ENTIRE queue? Type ok to continue"
 msgstr ""
 
 #. Confirmation dialog when permanently deleting a song file from the library
-#: templates/base.html:48
+#: templates/base.html:52
 msgid "Are you sure you want to delete this song from the library?"
 msgstr ""
 
 #. Label showing the number of semitones for pitch shift. {value} is replaced
 #. with a number like +3 or -2.
-#: templates/base.html:50
+#: templates/base.html:54
 #, python-brace-format
 msgid "{value} semitones"
 msgstr ""
 
 #. Confirmation dialog when changing the key/pitch of a song. {label} is
 #. replaced with a label like "+3 semitones".
-#: templates/base.html:52
+#: templates/base.html:56
 #, python-brace-format
 msgid "Transpose this song: {label}?"
 msgstr ""
 
 #. Toast confirming the key/pitch change was applied. {label} is replaced with
 #. a label like "+3 semitones".
-#: templates/base.html:54
+#: templates/base.html:58
 #, python-brace-format
 msgid "Key changed: {label}"
 msgstr ""
 
 #. Confirmation dialog when restarting the currently playing track.
-#: templates/base.html:56
+#: templates/base.html:60
 msgid "Are you sure you want to restart this track?"
 msgstr ""
 
 #. Informational tooltip explaining what a semitone is.
-#: templates/base.html:58
+#: templates/base.html:62
 msgid ""
 "A semitone is also known as a half-step. It is the smallest interval used"
 " in classical Western music, equal to a twelfth of an octave or half a "
@@ -563,25 +574,25 @@ msgstr ""
 
 #. Confirmation dialog when expanding the filesystem on Raspberry Pi, which
 #. triggers a reboot.
-#: templates/base.html:60
+#: templates/base.html:64
 msgid ""
 "Are you sure you want to expand the filesystem? This will reboot your "
 "raspberry pi."
 msgstr ""
 
 #. Label an add-to-queue button switches to once its song is in the queue.
-#: templates/base.html:62
+#: templates/base.html:66
 msgid "In the queue"
 msgstr ""
 
 #. Generic error prefix shown before an error message.
-#: templates/base.html:64
+#: templates/base.html:68
 msgid "Error"
 msgstr ""
 
 #. Accessible label for the banner naming the karaoke session in progress.
 #. {name} is replaced with the session's name.
-#: templates/base.html:242 templates/base.html:609
+#: templates/base.html:270 templates/base.html:642
 #, python-brace-format
 msgid "Current session: {name}"
 msgstr ""
@@ -589,26 +600,26 @@ msgstr ""
 #. Notification shown after trying to add a song to the queue. The song name
 #. comes after this string.
 #. Navigation link for the home page.
-#: templates/base.html:490 templates/base.html:492
+#: templates/base.html:523 templates/base.html:525
 msgid "Home"
 msgstr ""
 
-#: templates/base.html:519 templates/base.html:522
+#: templates/base.html:552 templates/base.html:555
 msgid "Join in"
 msgstr ""
 
 #. Last tab of the phone's bottom tab bar, opening the menu of the remaining
 #. pages.
-#: templates/base.html:598
+#: templates/base.html:631
 msgid "More"
 msgstr ""
 
 #. Label on button which saves the changes.
-#: templates/base.html:659 templates/edit.html:167
+#: templates/base.html:692 templates/edit.html:167
 msgid "Save"
 msgstr ""
 
-#: templates/base.html:660 templates/edit.html:172
+#: templates/base.html:693 templates/edit.html:172
 msgid "Cancel"
 msgstr ""
 

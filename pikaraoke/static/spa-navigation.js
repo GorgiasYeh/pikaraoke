@@ -226,12 +226,7 @@
                 help: window.translations.usernameHelp,
                 value: currentName
             }).done(function (res) {
-                Cookies.set("user", res.name, {
-                    expires: 3650,
-                    path: window.pikaraokeConfig.cookiePath
-                });
-                // Update the displayed name without reloading.
-                window.setCurrentUser(res.name);
+                window.saveUserName(res.name);
             });
             // Remove focus from the link to prevent CSS focus styling (black background)
             $(this).blur();

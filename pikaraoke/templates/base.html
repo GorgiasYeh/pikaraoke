@@ -42,6 +42,10 @@
       usernameLabel: {{ _('Username') | tojson }},
       // {# MSG: Hint under the username field noting the name is public. #}
       usernameHelp: {{ _('This name is visible to everyone.') | tojson }},
+      // {# MSG: Title of the dialog that asks a guest's name the first time they open PiKaraoke. #}
+      welcomeTitle: {{ _("Welcome! Let's sing") | tojson }},
+      // {# MSG: Text in the first-visit dialog explaining why the guest's name is asked for. #}
+      welcomeMessage: {{ _("Tell everyone who you are, so they know who picked each song.") | tojson }},
       // {# MSG: Confirmation prompt to clear entire queue. User must type ok to confirm #}
       promptClearQueue: {{ _('Are you sure you want to clear the ENTIRE queue? Type ok to continue') | tojson }},
       // {# MSG: Confirmation dialog when permanently deleting a song file from the library #}
@@ -150,6 +154,31 @@
       $("#current-user").attr({ title: name, "aria-label": name }).removeClass("has-text-success");
     };
 
+    // Remembers this device's name and shows it, from whichever dialog asked.
+    window.saveUserName = function (name) {
+      Cookies.set("user", name, { expires: 3650, path: window.pikaraokeConfig.cookiePath });
+      window.setCurrentUser(name);
+    };
+
+    // A first-time guest is asked their name straight away, so their first song
+    // already carries it. Asked once per tab: dismissing it leaves the "Join in"
+    // item, and the first add asks again.
+    function welcomeNewGuest() {
+      if (getUserCookie() || !$("#current-user").length || sessionStorage.getItem("welcomed")) {
+        return;
+      }
+      sessionStorage.setItem("welcomed", "1");
+      window.promptForIdentity({
+        title: window.translations.welcomeTitle,
+        message: window.translations.welcomeMessage,
+        label: window.translations.usernameLabel,
+        help: window.translations.usernameHelp,
+        value: ""
+      }).done(function (res) {
+        window.saveUserName(res.name);
+      });
+    }
+
     // Who a queue add is attributed to, resolved async so the name can come from
     // a modal: the KJ singer field, else this device's cookie, else the Join in
     // dialog (which writes the cookie). Rejects on dismissal, so nothing queues.
@@ -170,8 +199,7 @@
         help: window.translations.usernameHelp,
         value: ""
       }).done(function (res) {
-        Cookies.set("user", res.name, { expires: 3650, path: window.pikaraokeConfig.cookiePath });
-        window.setCurrentUser(res.name);
+        window.saveUserName(res.name);
         d.resolve(res.name);
       }).fail(function () {
         d.reject();
@@ -383,6 +411,8 @@
       var currentUser = getUserCookie();
       if (currentUser) {
         window.setCurrentUser(currentUser);
+      } else if (!isKjMode()) {
+        welcomeNewGuest();
       }
 
       // Username change handler is now in spa-navigation.js
