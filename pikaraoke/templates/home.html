@@ -63,10 +63,12 @@
 		$(".control-box").toggle(!!np.now_playing || !!np.up_next);
 		$(".control-box").toggleClass("is-inert", autoplayGap);
 
-		// While waiting, the slider reflects and sets the upcoming song's key.
+		// While waiting, the stepper reflects and sets the upcoming song's key.
 		var shownTranspose = pikaWaiting ? np.up_next_transpose : np.now_playing_transpose;
 		$("#transpose").val(shownTranspose);
 		$("#semitones-label").html(getSemitonesLabel(shownTranspose));
+		// A waiting song has not started, so presetting its key restarts nothing.
+		$("#transpose-restart-note").toggle(!pikaWaiting);
 
 		// set the volume slider to the current volume
 		if (np.volume != volume) {
@@ -77,31 +79,35 @@
 
 		// Not playing (paused or a song waiting to start): the button plays
 		// rather than pauses, and the gif stays still.
-		if (!window.isNowPlaying(np)) {
-			$("#pause-resume").removeClass("ph-pause");
-			$("#pause-resume").addClass("ph-play");
-			$(".playing_gif").attr("src", "{{  url_for('static', filename='images/now-playing.png') }}");
-		} else {
-			$("#pause-resume").removeClass("ph-play");
-			$("#pause-resume").addClass("ph-pause");
-			$(".playing_gif").attr("src", "{{  url_for('static', filename='images/now-playing.gif') }}");
-		}
+		var playing = window.isNowPlaying(np);
+		showPlayState(playing);
+		$(".playing_gif").attr(
+			"src",
+			playing
+				? "{{  url_for('static', filename='images/now-playing.gif') }}"
+				: "{{  url_for('static', filename='images/now-playing.png') }}"
+		);
+	}
+
+	// The button names what a tap will do, so its glyph and label follow the state.
+	function showPlayState(playing) {
+		$("#pause-resume").toggleClass("ph-pause", playing).toggleClass("ph-play", !playing);
+		$("#pause-resume-label").text(playing ? {{ _("Pause") | tojson }} : {{ _("Play") | tojson }});
 	}
 
 	$(function () {
 		$(".control-box").hide();
 
-		var slider = document.getElementById("transpose");
+		var keyInput = document.getElementById("transpose");
 		var output = document.getElementById("semitones-label");
-		if (slider && output) {
-			output.innerHTML = getSemitonesLabel(slider.value);
-			// Update the current slider value (each time you drag the slider handle)
-			slider.oninput = function () {
-				output.innerHTML = getSemitonesLabel(slider.value);
-			};
+		if (keyInput && output) {
+			output.innerHTML = getSemitonesLabel(keyInput.value);
+			// One semitone a tap, as a KTV remote's key buttons, within the octave
+			// either way that the server accepts.
 			$(".transpose-step").click(function () {
-				slider.value = Number(slider.value) + Number(this.dataset.step);
-				slider.oninput();
+				var value = Number(keyInput.value) + Number(this.dataset.step);
+				keyInput.value = Math.max(-12, Math.min(12, value));
+				output.innerHTML = getSemitonesLabel(keyInput.value);
 			});
 		}
 
@@ -114,7 +120,7 @@
 		);
 
 		$("#submit-transpose").click(function () {
-			var value = slider ? slider.value : 0;
+			var value = keyInput ? keyInput.value : 0;
 			function notifyKeyChanged() {
 				showNotification(
 					window.translations.keyChanged.replace("{label}", getSemitonesLabel(value)),
@@ -133,16 +139,16 @@
 				$.post(window.pikaraokeConfig.basePath + "/api/transpose/" + value)
 					.done(notifyKeyChanged);
 			}
-			slider.value = 0;
-			output.innerHTML = getSemitonesLabel(slider.value);
+			keyInput.value = 0;
+			output.innerHTML = getSemitonesLabel(keyInput.value);
 		});
 
 		$("#pause-resume-button").click(function () {
 			if (pikaWaiting) {
-				// Apply the slider's key to the waiting song, then start it, so the
-				// one transcode runs in the chosen key.
+				// Apply the chosen key to the waiting song, then start it, so the
+				// one transcode runs in that key.
 				var basePath = window.pikaraokeConfig.basePath;
-				var semitones = slider ? slider.value : 0;
+				var semitones = keyInput ? keyInput.value : 0;
 				$.post(basePath + "/api/queue/pitch?song="
 					+ encodeURIComponent(pikaWaitingSong) + "&semitones=" + semitones)
 					.always(function () {
@@ -151,7 +157,7 @@
 				return;
 			}
 			$.post(window.pikaraokeConfig.basePath + "/api/pause");
-			togglePausePlayButton();
+			showPlayState(!$("#pause-resume").hasClass("ph-pause"));
 		});
 
 		$("#vol-up").click(function () {
@@ -186,16 +192,6 @@
 				10000
 			);
 		});
-
-		function togglePausePlayButton() {
-			if ($("#pause-resume").hasClass("ph-pause")) {
-				$("#pause-resume").removeClass("ph-pause");
-				$("#pause-resume").addClass("ph-play");
-			} else {
-				$("#pause-resume").removeClass("ph-play");
-				$("#pause-resume").addClass("ph-pause");
-			}
-		}
 
 		//for first time load of splash screen
 		loadNowPlaying();
@@ -277,13 +273,11 @@
 
 {% block content %}
 
-{# iOS grouped sections: the song on a card, the next one under its own caption. #}
+{# iOS grouped sections: the song on a card, its controls straight under it where
+   no scrolling is needed, then the next song under its own caption. #}
 <div class="card mb-5"><div class="card-content p-4">
 	<div class="is-size-4 has-text-strong" id="now-playing">&nbsp;</div>
 </div></div>
-
-<p class="section-caption">{# MSG: Title for the section displaying the next song to be played. #} {% trans %}Next Song{% endtrans %}</p>
-<div class="card mb-5"><div class="card-content p-4" id="up-next"></div></div>
 
 {% if admin %}
 <div class="card control-box mb-5" style="max-width: 500px; display: none"><div class="card-content p-4">
@@ -296,7 +290,7 @@
 		</a>
 		<a title="{{ _('Play/Pause') }}" id="pause-resume-button">
 			<i id="pause-resume" class="ph ph-pause" aria-hidden="true"></i>
-			<span>{% trans %}Play/Pause{% endtrans %}</span>
+			<span id="pause-resume-label">{% trans %}Pause{% endtrans %}</span>
 		</a>
 		<a title="{{ _('Stop Current Song') }}" id="skip">
 			<i class="ph ph-skip-forward" aria-hidden="true"></i>
@@ -321,29 +315,22 @@
 	<div class="is-flex is-justify-content-space-between is-align-items-center">
 		{# MSG: Title of a control to change the key/pitch of the playing song. #}
 		<h4 class="mb-0">{% trans %}Change Key{% endtrans %}</h4>
-		<span class="icon-text is-size-5 has-text-weight-bold">
-			<span id="semitones-label"></span>
-			<a id="semitones-info"><span class="icon"><i class="ph ph-info" title="Info"></i></span></a>
-		</span>
+		<a id="semitones-info"><span class="icon"><i class="ph ph-info" title="Info"></i></span></a>
 	</div>
-	{# One semitone a tap, as a KTV remote's key buttons; the slider stays for
-	   bigger jumps. #}
-	<div class="is-flex is-align-items-center is-gap-1 mt-3">
-		<button class="button transpose-step" data-step="-1" aria-label="-1">&minus;</button>
-		<input
-			type="range"
-			min="-12"
-			max="12"
-			value="0"
-			class="transpose-slider is-flex-grow-1"
-			id="transpose"
-		/>
-		<button class="button transpose-step" data-step="1" aria-label="+1">+</button>
-		<button id="submit-transpose" class="button is-link">
-			{# MSG: Label on the button to confirm the change in key/pitch of the playing song. #} {% trans %}Change{%
-			endtrans %}
-		</button>
+	{# A stepper, as a KTV remote's key buttons: two big targets either side of
+	   the value, and nothing to drag. #}
+	<input type="hidden" id="transpose" value="0" />
+	<div class="is-flex is-align-items-center is-justify-content-space-between mt-3">
+		<button class="button is-rounded transpose-step" data-step="-1" aria-label="-1">&minus;</button>
+		<span id="semitones-label" class="is-size-4 has-text-weight-bold has-text-strong"></span>
+		<button class="button is-rounded transpose-step" data-step="1" aria-label="+1">+</button>
 	</div>
+	<button id="submit-transpose" class="button is-link is-fullwidth is-rounded mt-3">
+		{# MSG: Label on the button to confirm the change in key/pitch of the playing song. #} {% trans %}Change{%
+		endtrans %}
+	</button>
+	{# MSG: Note under the button that applies a new key to the playing song. #}
+	<p id="transpose-restart-note" class="is-size-7 has-text-weak has-text-centered mt-2">{% trans %}The song starts again from the beginning.{% endtrans %}</p>
 	{% endif %}
 
 	{% if mic_available %}
@@ -355,4 +342,7 @@
 	{% endif %}
 </div></div>
 {% endif %}
+
+<p class="section-caption">{# MSG: Title for the section displaying the next song to be played. #} {% trans %}Next Song{% endtrans %}</p>
+<div class="card mb-5"><div class="card-content p-4" id="up-next"></div></div>
 {% endblock %}

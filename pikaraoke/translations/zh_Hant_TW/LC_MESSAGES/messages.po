@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-30 08:04+0800\n"
+"POT-Creation-Date: 2026-10-30 08:29+0800\n"
 "PO-Revision-Date: 2024-08-28 10:09-0400\n"
 "Last-Translator: \n"
 "Language-Team: zh_hant_TW <LL@li.org>\n"
@@ -718,7 +718,7 @@ msgstr "搜尋歌名、歌手..."
 
 #. Button which empties the filter box and shows every song again.
 #. Link which clears the text from the search box.
-#: templates/files.html:320 templates/search.html:525
+#: templates/files.html:320 templates/search.html:528
 msgid "Clear"
 msgstr "清除"
 
@@ -802,9 +802,9 @@ msgstr "狀態"
 #. Button which adds an already-downloaded song to the queue.
 #. Button which downloads a song and puts it straight in the queue.
 #: templates/history.html:496 templates/partials/browse_results.html:20
-#: templates/rankings.html:102 templates/search.html:328
-#: templates/search.html:550 templates/search.html:633
-#: templates/search.html:642
+#: templates/rankings.html:102 templates/search.html:331
+#: templates/search.html:553 templates/search.html:636
+#: templates/search.html:645
 msgid "Add to queue"
 msgstr "點歌"
 
@@ -835,51 +835,65 @@ msgstr "下一位演唱者"
 msgid "No song is queued."
 msgstr "還沒有人點歌。"
 
+#: templates/home.html:95 templates/home.html:293 templates/queue.html:328
+#: templates/queue.html:484
+msgid "Pause"
+msgstr "暫停"
+
+#: templates/home.html:95 templates/queue.html:326
+msgid "Play"
+msgstr "播放"
+
 #. Confirmation message when clicking a button to skip a track.
-#: templates/home.html:175
+#: templates/home.html:181
 msgid ""
 "Are you sure you want to skip this track? If you didn't add this song, ask "
 "permission first!"
 msgstr "確定要切歌嗎？如果不是你點的歌，請先問過點歌的人！"
 
-#. Title for the section displaying the next song to be played.
-#: templates/home.html:285
-msgid "Next Song"
-msgstr "下一首"
-
-#: templates/home.html:293
+#: templates/home.html:287
 msgid "Restart Song"
 msgstr "從頭重唱"
 
-#: templates/home.html:295 templates/queue.html:480
+#: templates/home.html:289 templates/queue.html:480
 msgid "Restart"
 msgstr "重唱"
 
-#: templates/home.html:297 templates/home.html:299
+#: templates/home.html:291
 msgid "Play/Pause"
 msgstr "播放/暫停"
 
-#: templates/home.html:301
+#: templates/home.html:295
 msgid "Stop Current Song"
 msgstr "停止播放"
 
-#: templates/home.html:303 templates/queue.html:488
+#: templates/home.html:297 templates/queue.html:488
 msgid "Skip"
 msgstr "切歌"
 
 #. Title of a control to change the key/pitch of the playing song.
-#: templates/home.html:323
+#: templates/home.html:317
 msgid "Change Key"
 msgstr "升降 Key"
 
 #. Label on the button to confirm the change in key/pitch of the playing song.
-#: templates/home.html:343
+#: templates/home.html:329
 msgid "Change"
 msgstr "套用"
 
-#: templates/home.html:352 templates/settings.html:484
+#. Note under the button that applies a new key to the playing song.
+#: templates/home.html:333
+msgid "The song starts again from the beginning."
+msgstr "套用後，這首歌會從頭重新開始。"
+
+#: templates/home.html:339 templates/settings.html:484
 msgid "Microphones"
 msgstr "麥克風"
+
+#. Title for the section displaying the next song to be played.
+#: templates/home.html:346
+msgid "Next Song"
+msgstr "下一首"
 
 #. Shown on the copy button for a moment after the system info is copied.
 #: templates/info.html:23
@@ -1048,24 +1062,24 @@ msgid "Dismiss"
 msgstr "關閉"
 
 #. Tooltip on the button showing the previous page of a table.
-#: templates/partials/pager.html:32 templates/partials/pager.html:63
+#: templates/partials/pager.html:34 templates/partials/pager.html:68
 msgid "Previous page"
 msgstr "上一頁"
 
 #. Tooltip on the button showing the next page of a table.
-#: templates/partials/pager.html:34 templates/partials/pager.html:67
+#: templates/partials/pager.html:36 templates/partials/pager.html:72
 msgid "Next page"
 msgstr "下一頁"
 
 #. Pagination summary. {start}, {end} and {total} are replaced with numbers,
 #. reading for example "1-100 of 2000".
-#: templates/partials/pager.html:39 templates/partials/pager.html:82
+#: templates/partials/pager.html:42 templates/partials/pager.html:87
 #, python-brace-format
 msgid "{start}-{end} of {total}"
 msgstr "第 {start}-{end} 筆，共 {total} 筆"
 
 #. Label before the dropdown choosing how many rows to list per page.
-#: templates/partials/pager.html:44
+#: templates/partials/pager.html:48
 msgid "Per page"
 msgstr "每頁"
 
@@ -1098,14 +1112,6 @@ msgstr "拖曳調整順序"
 #: templates/queue.html:224
 msgid "The queue is empty"
 msgstr "待唱清單是空的"
-
-#: templates/queue.html:326
-msgid "Play"
-msgstr "播放"
-
-#: templates/queue.html:328 templates/queue.html:484
-msgid "Pause"
-msgstr "暫停"
 
 #. Checkbox label for playing the next queued song automatically
 #: templates/queue.html:408 templates/settings.html:538
@@ -1194,76 +1200,76 @@ msgstr "還沒有人唱過歌。"
 
 #. Status shown on a search result that has been requested but has not arrived
 #. yet.
-#: templates/search.html:308
+#: templates/search.html:311
 msgid "Adding..."
 msgstr "加入中..."
 
 #. Badge on a YouTube search result marking a song that is already downloaded.
-#: templates/search.html:334 templates/search.html:615
+#: templates/search.html:337 templates/search.html:620
 msgid "In library"
 msgstr "已下載"
 
 #. Subtitle under the Add New heading, explaining that this page gets songs
 #. the
 #. machine does not have.
-#: templates/search.html:491
+#: templates/search.html:494
 msgid "Add new songs from YouTube"
 msgstr "從 YouTube 找新歌"
 
 #. Placeholder in the box used to search YouTube for a song to download.
-#: templates/search.html:505
+#: templates/search.html:508
 msgid "Search YouTube by title, artist..."
 msgstr "在 YouTube 搜尋歌名、歌手..."
 
 #. Submit button on the search form for searching YouTube.
-#: templates/search.html:511
+#: templates/search.html:514
 msgid "Search"
 msgstr "搜尋"
 
 #. Checkbox label which enables matching songs which are not karaoke versions
 #. (i.e. the songs still                                 have a singer and are
 #. not just instrumentals.)
-#: templates/search.html:521
+#: templates/search.html:524
 msgid "Include non-karaoke matches"
 msgstr "也找原唱 MV"
 
 #. Link which reveals the direct-URL download form.
-#: templates/search.html:527
+#: templates/search.html:530
 msgid "Advanced"
 msgstr "進階"
 
 #. Label for an input which takes a YouTube url directly instead of searching
 #. titles.
-#: templates/search.html:535
+#: templates/search.html:538
 msgid "Paste a YouTube url:"
 msgstr "貼上 YouTube 網址："
 
 #. Button which downloads a song into the library without queuing it.
-#: templates/search.html:555 templates/search.html:681
+#: templates/search.html:558 templates/search.html:684
 msgid "Save for later"
 msgstr "只下載不點歌"
 
 #. Caption above the search hints on the Add New page.
-#: templates/search.html:568
+#: templates/search.html:571
 msgid "Tips"
 msgstr "小技巧"
 
 #. Search hint. Give an example of a well-known song title followed by its
 #. singer, in quotes.
-#: templates/search.html:572
+#: templates/search.html:575
 msgid ""
 "Type the song title and the singer for the best match, e.g. \"My Way Frank "
 "Sinatra\"."
 msgstr "輸入歌名加歌手最準，例如「千千闕歌 陳慧嫻」。"
 
 #. Search hint for when a song cannot be found.
-#: templates/search.html:576
+#: templates/search.html:579
 msgid "Can't find it? Add \"karaoke\" to the search."
 msgstr "找不到嗎？試試加上「KTV」或「伴唱」。"
 
 #. Html text which displays what was searched for, in quotes while the page is
 #. loading.
-#: templates/search.html:592
+#: templates/search.html:595
 #, python-format
 msgid ""
 "Searching YouTube for\n"
@@ -1273,7 +1279,7 @@ msgstr ""
 "\t\t<small><i>「%(search_term)s」</i></small>"
 
 #. Html text which displays what was searched for, in quotes.
-#: templates/search.html:599
+#: templates/search.html:602
 #, python-format
 msgid ""
 "Search results for\n"
@@ -1284,18 +1290,18 @@ msgstr ""
 
 #. Accessible label of the "..." button that opens more actions for a search
 #. result.
-#: templates/search.html:647
+#: templates/search.html:650
 msgid "More options"
 msgstr "更多選項"
 
-#: templates/search.html:661
+#: templates/search.html:664
 msgid ""
 "Preview unavailable for this video. Use the YouTube link on the result to "
 "watch it."
 msgstr "這部影片無法預覽，請點搜尋結果上的 YouTube 連結觀看。"
 
 #. Link which opens a search result's video on YouTube.
-#: templates/search.html:686
+#: templates/search.html:689
 msgid "Watch on YouTube"
 msgstr "在 YouTube 上看"
 

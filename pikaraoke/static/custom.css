@@ -947,7 +947,11 @@ td {
 .player-buttons .ph {
   font-size: 2.6rem;
 }
+/* Filled, as an iOS stepper's halves are: an outline alone vanishes on the card. */
 .transpose-step {
-  min-width: 2.75rem;
-  font-size: 1.3rem;
+  min-width: 3.5rem;
+  min-height: 3rem;
+  font-size: 1.6rem;
+  border-color: transparent;
+  background-color: var(--bulma-background);
 }
