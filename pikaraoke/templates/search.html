@@ -6,40 +6,43 @@
 		padding: 0;
 		margin: 0;
 	}
-	/* Each result is its own iOS card on the page's ground. */
-	ul.search_result_items li {
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		gap: 0.75rem;
-		padding: 0.75rem;
-		margin-bottom: 0.75rem;
+	/* One grouped iOS list: a small thumbnail beside the whole title, so a
+	   screen holds several results to compare instead of one big picture. */
+	ul.search_result_items {
 		border-radius: var(--bulma-radius);
 		background-color: var(--bulma-scheme-main);
 	}
+	ul.search_result_items li {
+		display: grid;
+		grid-template-columns: 8rem minmax(0, 1fr);
+		align-items: start;
+		gap: 0.75rem;
+		padding: 0.75rem;
+	}
+	ul.search_result_items li + li {
+		border-top: 1px solid var(--bulma-border-weak);
+	}
 	@media screen and (min-width: 768px) {
 		ul.search_result_items li {
-			flex-direction: row;
-			align-items: center;
+			grid-template-columns: 12rem minmax(0, 1fr);
 		}
 	}
+	/* Uploaders' titles carry the song, singer and version in no fixed order,
+	   so the title shows in full; a long unbroken run still wraps. */
+	.search-result-title {
+		line-height: 1.35;
+		overflow-wrap: anywhere;
+	}
 
-	/* Thumbnail: full width on mobile, fixed 200px on desktop */
 	#search-results .img-wrapper {
 		position: relative;
 		cursor: pointer;
-		width: 100%;
-		flex-shrink: 0;
-	}
-	@media screen and (min-width: 768px) {
-		#search-results .img-wrapper {
-			width: 200px;
-		}
 	}
 	#search-results .img-frame {
 		position: relative;
 		overflow: hidden;
 		aspect-ratio: 16 / 9;
+		border-radius: calc(var(--bulma-radius) * 0.6);
 	}
 	#search-results .img-wrapper img {
 		display: block;
@@ -55,30 +58,6 @@
 		cursor: pointer;
 	}
 
-	/* Stacked at every width, as it already rendered on mobile: side by side the
-	   two labels form a wide block that squeezes the title into a narrow column. */
-	.search_result_items_actions {
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		flex-shrink: 0;
-		gap: 0.5rem;
-	}
-
-	/* Meta: title fills space, button pinned right */
-	.search_result_items_meta {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		flex: 1;
-		min-width: 0;
-		text-align: left;
-	}
-	.search_result_items_meta > div:first-child {
-		flex: 1;
-		min-width: 0;
-	}
-
 	#search-results .img-wrapper:hover img {
 		opacity: 0.7;
 		box-shadow: 0px 0px 3px 1px var(--bulma-text-weak);
@@ -91,8 +70,8 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		width: 80px;
-		height: 80px;
+		width: 2.5rem;
+		height: 2.5rem;
 		background-color: color-mix(in srgb, var(--bulma-black) 60%, transparent);
 		border-radius: 50%;
 		opacity: 0.7;
@@ -108,7 +87,7 @@
 		top: 50%;
 		left: 51%;
 		transform: translate(-50%, -50%);
-		font-size: 2rem;
+		font-size: 1.25rem;
 		color: var(--bulma-white);
 		opacity: 0.9;
 		transition: all 0.3s ease;
@@ -323,7 +302,7 @@
 				$actions.data("choiceHtml", $actions.html());
 			}
 			$actions.html(
-				'<span class="button is-static search_result_items_pending">' +
+				'<span class="button is-static is-rounded search_result_items_pending">' +
 					'<span class="icon"><i class="ph ph-download-simple"></i></span>' +
 					// {# MSG: Status shown on a search result that has been requested but has not arrived yet. #}
 					'<span>{{ _("Adding...") | forceescape }}</span>' +
@@ -343,7 +322,7 @@
 		// add-song-link clicks from the document and reads the path from data-song.
 		function showInLibrary($row, path) {
 			$row.find(".search_result_items_actions").html(
-				'<a class="button is-success add-song-link" href="#" data-song="' + encodeURIComponent(path) + '">' +
+				'<a class="button is-success is-rounded add-song-link" href="#" data-song="' + encodeURIComponent(path) + '">' +
 					'<span class="icon"><i class="ph ph-plus-circle"></i></span>' +
 					// {# MSG: Button which adds an already-downloaded song to the queue. #}
 					'<span>{{ _("Add to queue") | forceescape }}</span>' +
@@ -356,24 +335,44 @@
 			}
 		}
 
+		function startDownload($row, addToQueue) {
+			const $actions = $row.find(".search_result_items_actions");
+			showPending($actions);
+			requestDownload($row.attr("value"), $row.attr("data-ytTitle"), addToQueue, function (accepted) {
+				if (!accepted) {
+					restoreChoice($actions);
+				}
+			});
+		}
+
 		// Delegated and scoped to the download class: rows for songs already in
 		// the library render an anchor instead of a button, and an unconditional
-		// querySelector("button") would throw on them. data-queue carries the
-		// intent, so "Add to queue" and "Save for later" share one handler.
+		// querySelector("button") would throw on them.
 		$("#search-results").on("click", ".search_result_items_download", function () {
-			const item = this.closest("li");
-			const $actions = $(this).closest(".search_result_items_actions");
-			showPending($actions);
-			requestDownload(
-				item.getAttribute("value"),
-				item.getAttribute("data-ytTitle"),
-				Boolean(this.dataset.queue),
-				function (accepted) {
-					if (!accepted) {
-						restoreChoice($actions);
-					}
-				}
-			);
+			startDownload($(this).closest("li"), true);
+		});
+
+		// The rarely needed actions wait behind "..." in a sheet, leaving each row
+		// one obvious button. Saving is offered only while the row still shows its
+		// download button: not once it is pending or already in the library.
+		const optionsModal = document.getElementById("result-options-modal");
+		let $optionsRow = null;
+		$("#search-results").on("click", ".result-options", function () {
+			$optionsRow = $(this).closest("li");
+			$("#result-options-title").text($optionsRow.attr("data-ytTitle"));
+			$("#result-options-channel").text($optionsRow.attr("data-channel"));
+			$("#opt-youtube").attr("href", $optionsRow.attr("value"));
+			$("#opt-save").toggleClass("is-hidden", !$optionsRow.find(".search_result_items_download").length);
+			optionsModal.classList.add("is-active");
+		});
+		const closeOptions = function () {
+			optionsModal.classList.remove("is-active");
+		};
+		$(optionsModal).on("click", ".modal-background, .delete, #opt-youtube", closeOptions);
+		$("#opt-save").on("click", function (e) {
+			e.preventDefault();
+			closeOptions();
+			startDownload($optionsRow, false);
 		});
 
 		window.onPageSocket("song_downloaded", function (data) {
@@ -523,7 +522,7 @@
 			</label>
 			<span class="is-inline-flex is-align-items-center is-gap-2.5 ml-auto">
 				{# MSG: Link which clears the text from the search box. #}
-				<a id="clear-search" class="has-text-danger">{% trans %}Clear{% endtrans %}</a>
+				<a id="clear-search">{% trans %}Clear{% endtrans %}</a>
 				{# MSG: Link which reveals the direct-URL download form. #}
 				<a id="show-advanced" aria-expanded="false">{% trans %}Advanced{% endtrans %}</a>
 			</span>
@@ -605,7 +604,7 @@
 		<ul id="search-results" class="search_result_items">
 			{% for result in search_results %}
 			{% set local_path = library_matches.get(result.video_id) %}
-			<li data-ytID="{{result.video_id}}" data-ytTitle="{{result.title}}" value="{{result.url}}" data-index="{{loop.index0}}">
+			<li data-ytID="{{result.video_id}}" data-ytTitle="{{result.title}}" data-channel="{{result.channel}}" value="{{result.url}}" data-index="{{loop.index0}}">
 				<div class="img-wrapper" data-url="{{result.url}}">
 					<div class="img-frame">
 						<img src="https://img.youtube.com/vi/{{result.video_id}}/mqdefault.jpg" />
@@ -618,40 +617,36 @@
 						{% if result.duration %}<span class="duration-badge">{{ result.duration }}</span>{% endif %}
 					</div>
 				</div>
-				<div class="search_result_items_meta">
-					<div>
-						{{result.title}}
-						{% if result.channel %}<div class="is-size-7 has-text-weak">{{ result.channel }}</div>{% endif %}
-						<a href="{{result.url}}" target="_blank" rel="noopener noreferrer" class="is-size-7 has-text-info">YouTube ↗</a>
-					</div>
-					<div class="search_result_items_actions">
-						{% if local_path %}
-						{# Already downloaded, so queue it rather than fetching a second copy. #}
-						<a
-							class="button is-success add-song-link"
-							href="#"
-							data-song="{{url_escape(local_path.encode('utf-8','surrogateescape'))}}"
-						>
-							<span class="icon"><i class="ph ph-plus-circle"></i></span>
-							{# MSG: Button which adds an already-downloaded song to the queue. #}
-							<span>{% trans %}Add to queue{% endtrans %}</span>
-						</a>
-						{% else %}
-						{# The row states the intent, so there is no global "queue once downloaded" toggle. #}
-						{# The label needs its own span: with a bare text node the icon is the
-						   only element child, and Bulma's icon-only-button rule then applies
-						   negative margins that pull the text over the glyph. #}
-						{# MSG: Button which downloads a song and puts it straight in the queue. #}
-						<button class="button is-success search_result_items_download" data-queue="1">
-							<span class="icon"><i class="ph ph-plus-circle"></i></span>
-							<span>{% trans %}Add to queue{% endtrans %}</span>
+				<div>
+					<p class="search-result-title">{{result.title}}</p>
+					<div class="is-flex is-align-items-center is-gap-1 mt-2">
+						<div class="search_result_items_actions">
+							{% if local_path %}
+							{# Already downloaded, so queue it rather than fetching a second copy. #}
+							<a
+								class="button is-success is-rounded add-song-link"
+								href="#"
+								data-song="{{url_escape(local_path.encode('utf-8','surrogateescape'))}}"
+							>
+								<span class="icon"><i class="ph ph-plus-circle"></i></span>
+								{# MSG: Button which adds an already-downloaded song to the queue. #}
+								<span>{% trans %}Add to queue{% endtrans %}</span>
+							</a>
+							{% else %}
+							{# The label needs its own span: with a bare text node the icon is the
+							   only element child, and Bulma's icon-only-button rule then applies
+							   negative margins that pull the text over the glyph. #}
+							{# MSG: Button which downloads a song and puts it straight in the queue. #}
+							<button class="button is-success is-rounded search_result_items_download">
+								<span class="icon"><i class="ph ph-plus-circle"></i></span>
+								<span>{% trans %}Add to queue{% endtrans %}</span>
+							</button>
+							{% endif %}
+						</div>
+						{# MSG: Accessible label of the "..." button that opens more actions for a search result. #}
+						<button class="button is-rounded result-options" aria-label="{{ _('More options') }}">
+							<span class="icon"><i class="ph ph-dots-three is-size-4"></i></span>
 						</button>
-						{# MSG: Button which downloads a song into the library without queuing it. #}
-						<button class="button search_result_items_download" data-queue="">
-							<span class="icon"><i class="ph ph-download-simple"></i></span>
-							<span>{% trans %}Save for later{% endtrans %}</span>
-						</button>
-						{% endif %}
 					</div>
 				</div>
 			</li>
@@ -668,6 +663,30 @@
 				</div>
 			</div>
 			<button class="modal-close is-large" aria-label="close"></button>
+		</div>
+		<div class="modal" id="result-options-modal">
+			<div class="modal-background"></div>
+			<div class="modal-card">
+				<header class="modal-card-head">
+					<div class="modal-card-title mb-0">
+						<p class="is-size-6" id="result-options-title"></p>
+						<p class="is-size-7 has-text-weak" id="result-options-channel"></p>
+					</div>
+					<button class="delete" aria-label="close"></button>
+				</header>
+				<section class="modal-card-body">
+					<a id="opt-save" class="panel-block py-3" href="#">
+						<span class="icon mr-2"><i class="ph ph-download-simple"></i></span>
+						{# MSG: Button which downloads a song into the library without queuing it. #}
+						{% trans %}Save for later{% endtrans %}
+					</a>
+					<a id="opt-youtube" class="panel-block py-3" target="_blank" rel="noopener noreferrer">
+						<span class="icon mr-2"><i class="ph ph-youtube-logo"></i></span>
+						{# MSG: Link which opens a search result's video on YouTube. #}
+						{% trans %}Watch on YouTube{% endtrans %}
+					</a>
+				</section>
+			</div>
 		</div>
 	</div>
 </div>

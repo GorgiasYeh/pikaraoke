@@ -19,8 +19,7 @@ MISSING = SearchResult(
 
 # The rendered elements, not the bare class name -- that also appears in the page's CSS.
 # The row carries the queue-or-not intent, so there is no global toggle to read.
-QUEUE_BUTTON = 'class="button is-success search_result_items_download" data-queue="1"'
-SAVE_BUTTON = 'class="button search_result_items_download" data-queue=""'
+QUEUE_BUTTON = 'class="button is-success is-rounded search_result_items_download"'
 
 
 @pytest.fixture
@@ -99,15 +98,19 @@ class TestLibraryMatches:
         assert "In library" in rows
         assert "add-song-link" in rows
         assert QUEUE_BUTTON not in rows
-        assert SAVE_BUTTON not in rows
 
-    def test_missing_song_offers_both_queue_and_save(self, client):
+    def test_missing_song_offers_a_download(self, client):
         """The row carries the intent, so there is no global queue-once-downloaded toggle."""
         response, _ = _search(client, [MISSING], {})
         rows = _rows(response)
         assert "In library" not in rows
         assert QUEUE_BUTTON in rows
-        assert SAVE_BUTTON in rows
+
+    def test_save_for_later_waits_in_the_options_sheet(self, client):
+        response, _ = _search(client, [MISSING], {})
+        page = response.data.decode()
+        assert "result-options" in _rows(response)
+        assert 'id="opt-save"' in page
 
     def test_no_global_queue_toggle_remains(self, client):
         """The removed checkboxes were #add-to-queue-direct and #add-to-queue-search."""
@@ -120,7 +123,6 @@ class TestLibraryMatches:
         assert "In library" in rows
         assert "add-song-link" in rows
         assert QUEUE_BUTTON in rows
-        assert SAVE_BUTTON in rows
 
     def test_every_result_field_reaches_the_row(self, client):
         """The download script reads value= and data-ytTitle, so a dropped field
