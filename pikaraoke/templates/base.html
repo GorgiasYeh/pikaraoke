@@ -17,6 +17,23 @@
   <link rel="stylesheet" href="{{  url_for('static', filename='bulma.min.css') }}">
   <link rel="stylesheet" href="{{  url_for('static', filename='phosphor/regular/style.css') }}">
   <link rel="stylesheet" href="{{  url_for('static', filename='custom.css') }}">
+  <script>
+    // On a phone the root size, and with it every rem, follows iOS Settings >
+    // Display > Text Size, so a guest who reads with larger text gets it here
+    // too. Capped at 21px, two steps above the default: the larger sizes, up to
+    // the accessibility ones, break the layout. Measured in script because CSS
+    // cannot clamp the system size. Touch screens only: on a Mac it is 13pt.
+    (function () {
+      var phone = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+      if (!phone || !CSS.supports("font", "-apple-system-body")) return;
+      var probe = document.createElement("span");
+      probe.style.font = "-apple-system-body";
+      document.documentElement.appendChild(probe);
+      var size = parseFloat(getComputedStyle(probe).fontSize);
+      probe.remove();
+      document.documentElement.style.fontSize = Math.min(size, 21) + "px";
+    })();
+  </script>
   <link rel="icon" type="image/png" href="{{  url_for('static', filename='images/microphone.png') }}">
   {# Added to a phone's home screen, PiKaraoke opens full screen like an app. #}
   <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
@@ -665,7 +682,9 @@
       {# Written once here rather than per page: the heading is chrome, and its
          text is the same string the <title> tag uses. #}
       <header class="block">
-        <div class="is-flex is-justify-content-space-between is-align-items-baseline is-gap-2">
+        {# Wraps rather than squeezes: at a large text size the action drops below
+           the title instead of folding it onto two lines. #}
+        <div class="is-flex is-flex-wrap-wrap is-justify-content-space-between is-align-items-baseline is-gap-2">
           <h1 class="title has-text-weight-bold mb-0">{% block heading %}{{ title }}{% endblock %}</h1>
           {% block heading_action %}{% endblock %}
         </div>

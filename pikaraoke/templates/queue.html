@@ -388,13 +388,15 @@
 
 <style>
 	/* The song column takes the slack. The number column holds two digits and
-	   the now-playing image is two digits wide, so starting a song moves nothing. */
+	   the now-playing image is two digits wide, so starting a song moves nothing.
+	   The handle and options columns are a fixed thumb-sized 44px rather than em,
+	   so a large text size gives its room to the titles. */
 	#auto-refresh .col-number {
-		width: calc(2ch + 1.5em);
+		width: calc(2ch + 12px);
 	}
 	#auto-refresh .col-drag,
 	#auto-refresh .col-options {
-		width: 3em;
+		width: 44px;
 	}
 	#auto-refresh img {
 		width: 2ch;
@@ -415,8 +417,10 @@
 </table>
 
 {% if admin %}
-<div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
-	<div class="is-flex is-align-items-center">
+{# The two halves wrap as wholes: squeezed, the sentence around the number input
+   would fold one character per line. #}
+<div class="is-flex is-flex-wrap-wrap is-justify-content-space-between is-align-items-center is-gap-2 mb-3">
+	<div class="is-flex is-flex-shrink-0 is-align-items-center">
 		<a class="add-random has-text-success" href="#"
 			><span class="icon is-medium mr-1"><i class="ph ph-plus-circle"></i></span></a>
 			{% trans %}Add <input id="randomNumberInput" class="input mx-2 p-2" pattern="\d*" maxlength="2" value="3" min="1" max="99" style="width: 42px" /> random songs{% endtrans %}

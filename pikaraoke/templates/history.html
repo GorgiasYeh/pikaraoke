@@ -376,19 +376,20 @@
 	/* A phone keeps the columns rather than stacking each play into a card: the
 	   header row is the only thing saying what these values are, and sorting
 	   belongs on it. Room is found by letting the performer and song columns
-	   wrap (the timestamp is already down to a bare time -- see whenLabel). */
+	   wrap (the timestamp is already down to a bare time -- see whenLabel). The
+	   glyph columns are fixed px, so a large text size gives its room to the song. */
 	@media screen and (max-width: 600px) {
 		#play-log .col-when {
-			width: 5.5em;
+			width: calc(4.2em + 8px);
 		}
 		#play-log .col-performer {
-			width: 22%;
+			width: 20%;
 		}
 		#play-log .col-status {
-			width: 3.2em;
+			width: 32px;
 		}
 		#play-log .col-options {
-			width: 2em;
+			width: 28px;
 		}
 		#play-log td.when {
 			color: var(--bulma-text-weak);

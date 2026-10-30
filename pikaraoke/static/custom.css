@@ -72,17 +72,6 @@
   font-size: var(--bulma-size-7) !important;
 }
 
-/* On a phone the root size is the one set in iOS Settings > Display > Text Size,
-   so a guest who reads with larger text gets it here too. Scoped to touch
-   screens: on a Mac the same keyword means 13pt. */
-@supports (font: -apple-system-body) {
-  @media (hover: none) and (pointer: coarse) {
-    html {
-      font: -apple-system-body;
-    }
-  }
-}
-
 /* Light: white cards on iOS grouped grey. Bulma's scheme-main is the card -- the
    surface it measures stripes, hovers, lines and borders from -- and the page
    behind the cards is the one surface beyond its ramp. */
@@ -309,6 +298,7 @@ input.switch[type="checkbox"]:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
+  white-space: nowrap;
 }
 .heading-action input.switch[type="checkbox"] {
   margin-right: 0;
