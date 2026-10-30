@@ -28,10 +28,13 @@
 {% set start = ((page - 1) * per_page) + 1 if total else 0 %}
 {% set end = [page * per_page, total] | min %}
 <div class="pager-controls is-flex is-flex-wrap-wrap is-align-items-center is-gap-1 mt-2">
+	{# One page has nowhere to go, so it shows the count alone, not two dead buttons. #}
+	{% if total > per_page %}
 	{# MSG: Tooltip on the button showing the previous page of a table. #}
 	{{ _end(_('Previous page'), 'caret-left', page_href | replace('PAGENUMBER', page - 1), page > 1) }}
 	{# MSG: Tooltip on the button showing the next page of a table. #}
 	{{ _end(_('Next page'), 'caret-right', page_href | replace('PAGENUMBER', page + 1), end < total) }}
+	{% endif %}
 	{# Tokens rather than Jinja placeholders, because renderPager() below substitutes
 	   the same string client-side and shares this one msgid. #}
 	{# MSG: Pagination summary. {start}, {end} and {total} are replaced with numbers, reading for example "1-100 of 2000". #}
@@ -39,16 +42,18 @@
 		{{- _('{start}-{end} of {total}') | replace('{start}', start) | replace('{end}', end) | replace('{total}', total) -}}
 	</span>
 	{% if size_options %}
-	<span class="is-flex-grow-1"></span>
-	{# MSG: Label before the dropdown choosing how many rows to list per page. #}
-	<label class="is-size-7" for="pager-per-page">{% trans %}Per page{% endtrans %}</label>
-	<div class="select is-small">
-		<select id="pager-per-page">
-			{% for n in size_options %}
-			<option value="{{ n }}"{% if n == per_page %} selected{% endif %}>{{ n }}</option>
-			{% endfor %}
-		</select>
-	</div>
+	{# Label and dropdown wrap as one, so a narrow row never strands the label. #}
+	<span class="is-flex is-align-items-center is-gap-1 ml-auto">
+		{# MSG: Label before the dropdown choosing how many rows to list per page. #}
+		<label class="is-size-7" for="pager-per-page">{% trans %}Per page{% endtrans %}</label>
+		<div class="select is-small">
+			<select id="pager-per-page">
+				{% for n in size_options %}
+				<option value="{{ n }}"{% if n == per_page %} selected{% endif %}>{{ n }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</span>
 	{% endif %}
 </div>
 {% endmacro %}

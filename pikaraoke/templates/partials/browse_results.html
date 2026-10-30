@@ -6,7 +6,7 @@
 {{ pager.pager(page, per_page, total, page_href, size_options=per_page_options) }}
 {# A row is an iOS list cell: the title, then a labelled button - an unlabelled
    plus was the one thing guests could not find. #}
-<table class="table is-striped browse-table">
+<table class="table is-striped browse-table mt-3">
 	{% for song in songs %}
 	{% set display_name = filename_from_path(song) %}
 	<tr value="{{ song }}">
