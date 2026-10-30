@@ -19,7 +19,11 @@
 	ul.search_result_items li + li {
 		border-top: 1px solid var(--bulma-border-weak);
 	}
-	/* The thumbnail gives way first, so the buttons fit at any text size. */
+	/* The thumbnail gives way first, so the buttons fit at any text size. On a
+	   wide screen the buttons stop at a button's width rather than spanning it. */
+	.search-result-actions {
+		max-width: 20rem;
+	}
 	.search-result-row .img-wrapper {
 		flex: 0 1 8rem;
 		min-width: 0;
@@ -622,7 +626,7 @@
 							{% if result.duration %}<span class="duration-badge">{{ result.duration }}</span>{% endif %}
 						</div>
 					</div>
-					<div class="is-flex is-align-items-center is-gap-1 is-flex-grow-1">
+					<div class="search-result-actions is-flex is-align-items-center is-gap-1 is-flex-grow-1">
 						<div class="search_result_items_actions is-flex-grow-1">
 							{% if local_path %}
 							{# Already downloaded, so queue it rather than fetching a second copy. #}

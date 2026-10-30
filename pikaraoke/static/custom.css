@@ -364,6 +364,11 @@ input.switch[type="checkbox"]:focus-visible {
   /* A text control: hover tints the text and holds the background, as every other
      text control in the app does. */
   --bulma-navbar-item-hover-background-l-delta: 0%;
+  /* The current page is marked by its tint alone, as a tab bar marks it; Bulma's
+     default fills it with the link colour, under text that is the link colour. */
+  --bulma-navbar-item-selected-h: var(--bulma-scheme-h);
+  --bulma-navbar-item-selected-s: var(--bulma-scheme-s);
+  --bulma-navbar-item-selected-background-l: var(--bulma-scheme-main-l);
 }
 
 /* One hamburger at every width. Bulma shows the brand burger only below 1024px and
