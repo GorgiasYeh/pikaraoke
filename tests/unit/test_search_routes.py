@@ -19,7 +19,7 @@ MISSING = SearchResult(
 
 # The rendered elements, not the bare class name -- that also appears in the page's CSS.
 # The row carries the queue-or-not intent, so there is no global toggle to read.
-QUEUE_BUTTON = 'class="button is-success is-rounded search_result_items_download"'
+QUEUE_BUTTON = 'class="button is-success is-rounded is-fullwidth search_result_items_download"'
 
 
 @pytest.fixture

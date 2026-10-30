@@ -6,30 +6,33 @@
 		padding: 0;
 		margin: 0;
 	}
-	/* One grouped iOS list: a small thumbnail beside the whole title, so a
-	   screen holds several results to compare instead of one big picture. */
+	/* One grouped iOS list. Each row reads top to bottom: the whole title on
+	   its own line, then a small thumbnail beside the buttons, so a long title
+	   or a large text size never squeezes the buttons off the row. */
 	ul.search_result_items {
 		border-radius: var(--bulma-radius);
 		background-color: var(--bulma-scheme-main);
 	}
 	ul.search_result_items li {
-		display: grid;
-		grid-template-columns: 8rem minmax(0, 1fr);
-		align-items: start;
-		gap: 0.75rem;
 		padding: 0.75rem;
 	}
 	ul.search_result_items li + li {
 		border-top: 1px solid var(--bulma-border-weak);
 	}
+	/* The thumbnail gives way first, so the buttons fit at any text size. */
+	.search-result-row .img-wrapper {
+		flex: 0 1 8rem;
+		min-width: 0;
+	}
 	@media screen and (min-width: 768px) {
-		ul.search_result_items li {
-			grid-template-columns: 12rem minmax(0, 1fr);
+		.search-result-row .img-wrapper {
+			flex-basis: 12rem;
 		}
 	}
 	/* Uploaders' titles carry the song, singer and version in no fixed order,
 	   so the title shows in full; a long unbroken run still wraps. */
 	.search-result-title {
+		font-weight: var(--bulma-weight-medium);
 		line-height: 1.35;
 		overflow-wrap: anywhere;
 	}
@@ -302,7 +305,7 @@
 				$actions.data("choiceHtml", $actions.html());
 			}
 			$actions.html(
-				'<span class="button is-static is-rounded search_result_items_pending">' +
+				'<span class="button is-static is-rounded is-fullwidth search_result_items_pending">' +
 					'<span class="icon"><i class="ph ph-download-simple"></i></span>' +
 					// {# MSG: Status shown on a search result that has been requested but has not arrived yet. #}
 					'<span>{{ _("Adding...") | forceescape }}</span>' +
@@ -322,7 +325,7 @@
 		// add-song-link clicks from the document and reads the path from data-song.
 		function showInLibrary($row, path) {
 			$row.find(".search_result_items_actions").html(
-				'<a class="button is-success is-rounded add-song-link" href="#" data-song="' + encodeURIComponent(path) + '">' +
+				'<a class="button is-success is-rounded is-fullwidth add-song-link" href="#" data-song="' + encodeURIComponent(path) + '">' +
 					'<span class="icon"><i class="ph ph-plus-circle"></i></span>' +
 					// {# MSG: Button which adds an already-downloaded song to the queue. #}
 					'<span>{{ _("Add to queue") | forceescape }}</span>' +
@@ -605,26 +608,26 @@
 			{% for result in search_results %}
 			{% set local_path = library_matches.get(result.video_id) %}
 			<li data-ytID="{{result.video_id}}" data-ytTitle="{{result.title}}" data-channel="{{result.channel}}" value="{{result.url}}" data-index="{{loop.index0}}">
-				<div class="img-wrapper" data-url="{{result.url}}">
-					<div class="img-frame">
-						<img src="https://img.youtube.com/vi/{{result.video_id}}/mqdefault.jpg" />
-						{# On the thumbnail rather than after the title: titles wrap, so a tag
-						   trailing the text lands wherever the last line happens to end. #}
-						{% if local_path %}
-						{# MSG: Badge on a YouTube search result marking a song that is already downloaded. #}
-						<span class="library-badge">{% trans %}In library{% endtrans %}</span>
-						{% endif %}
-						{% if result.duration %}<span class="duration-badge">{{ result.duration }}</span>{% endif %}
+				<p class="search-result-title mb-2">{{result.title}}</p>
+				<div class="search-result-row is-flex is-align-items-center is-gap-2">
+					<div class="img-wrapper" data-url="{{result.url}}">
+						<div class="img-frame">
+							<img src="https://img.youtube.com/vi/{{result.video_id}}/mqdefault.jpg" />
+							{# On the thumbnail rather than after the title: titles wrap, so a tag
+							   trailing the text lands wherever the last line happens to end. #}
+							{% if local_path %}
+							{# MSG: Badge on a YouTube search result marking a song that is already downloaded. #}
+							<span class="library-badge">{% trans %}In library{% endtrans %}</span>
+							{% endif %}
+							{% if result.duration %}<span class="duration-badge">{{ result.duration }}</span>{% endif %}
+						</div>
 					</div>
-				</div>
-				<div>
-					<p class="search-result-title">{{result.title}}</p>
-					<div class="is-flex is-align-items-center is-gap-1 mt-2">
-						<div class="search_result_items_actions">
+					<div class="is-flex is-align-items-center is-gap-1 is-flex-grow-1">
+						<div class="search_result_items_actions is-flex-grow-1">
 							{% if local_path %}
 							{# Already downloaded, so queue it rather than fetching a second copy. #}
 							<a
-								class="button is-success is-rounded add-song-link"
+								class="button is-success is-rounded is-fullwidth add-song-link"
 								href="#"
 								data-song="{{url_escape(local_path.encode('utf-8','surrogateescape'))}}"
 							>
@@ -637,7 +640,7 @@
 							   only element child, and Bulma's icon-only-button rule then applies
 							   negative margins that pull the text over the glyph. #}
 							{# MSG: Button which downloads a song and puts it straight in the queue. #}
-							<button class="button is-success is-rounded search_result_items_download">
+							<button class="button is-success is-rounded is-fullwidth search_result_items_download">
 								<span class="icon"><i class="ph ph-plus-circle"></i></span>
 								<span>{% trans %}Add to queue{% endtrans %}</span>
 							</button>
