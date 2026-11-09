@@ -16,6 +16,7 @@
     /**
      * Highlight the nav bar item for a path. Every item's id is its first path
      * segment ("/browse/rock" -> "browse"), so a new page needs no change here.
+     * A tab lists in data-nav every segment it stands for.
      * Strips the reverse proxy base path first, so callers can pass a raw
      * location. Shared with base.html, which highlights on a full page load.
      * @param {string} path - Path without a query string
@@ -33,7 +34,7 @@
         // nav item, and interpolated into a selector it would throw out of
         // querySelectorAll and abandon the rest of the caller.
         if (/^[\w-]+$/.test(segment)) {
-            $('#' + segment + ', .tab-bar-item[data-nav="' + segment + '"]').addClass('is-active');
+            $('#' + segment + ', .tab-bar-item[data-nav~="' + segment + '"]').addClass('is-active');
         }
     };
 
@@ -184,8 +185,7 @@
      * This ensures it works reliably across all page transitions
      */
     function initHamburgerMenu() {
-        // The burger and the phone's "More" tab both open the same menu.
-        const toggles = '.navbar-burger, .tab-more';
+        const toggles = '.navbar-burger';
 
         // Remove any existing handlers first to avoid duplicates
         $(document).off('click', toggles);
@@ -354,7 +354,7 @@
         isNavigating = true;
 
         // Close hamburger menu if open
-        $('.navbar-burger, .tab-more').removeClass('is-active');
+        $('.navbar-burger').removeClass('is-active');
         $('.navbar-menu').removeClass('is-active');
 
         try {

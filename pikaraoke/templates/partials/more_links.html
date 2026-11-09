@@ -1,0 +1,25 @@
+{# The pages beyond the main four: the computer's burger menu and the phone's
+   More page list the same links, each styled by the caller's item class. Only
+   the menu carries the ids highlightNavItem() marks; the More page has no
+   current item of its own. #}
+{% macro more_links(item_class, with_ids=false, chevron=false) %}
+{% macro item(id, href, glyph, label) %}
+<a {% if with_ids %}id="{{ id }}" {% endif %}class="{{ item_class }}" href="{{ href }}">
+  <span class="icon"><i class="ph {{ glyph }}"></i></span>
+  <span class="is-flex-grow-1">{{ label }}</span>
+  {% if chevron %}<span class="icon has-text-weak"><i class="ph ph-caret-right"></i></span>{% endif %}
+</a>
+{% endmacro %}
+{# MSG: Menu link to the most-played songs and most active singers. #}
+{{ item('rankings', url_for('sessions.rankings'), 'ph-trophy', _('Rankings')) }}
+{# MSG: Menu link to the log of everything that has been sung. #}
+{{ item('history', url_for('sessions.history'), 'ph-clock-counter-clockwise', _('Play History')) }}
+{% if is_admin() %}
+{# MSG: Menu link to the karaoke session management page, only shown to the host. #}
+{{ item('sessions', url_for('sessions.sessions'), 'ph-calendar-dots', _('Sessions')) }}
+{% endif %}
+{# MSG: Menu link to the settings and host controls page. #}
+{{ item('settings', url_for('settings.settings'), 'ph-gear', _('Settings')) }}
+{# MSG: Menu link to the page with the QR code to join and the system information. #}
+{{ item('info', url_for('info.info'), 'ph-info', _('Info')) }}
+{% endmacro %}

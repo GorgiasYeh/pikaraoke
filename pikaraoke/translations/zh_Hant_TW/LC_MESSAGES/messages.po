@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-30 08:29+0800\n"
+"POT-Creation-Date: 2026-11-09 10:05+0800\n"
 "PO-Revision-Date: 2024-08-28 10:09-0400\n"
 "Last-Translator: \n"
 "Language-Team: zh_hant_TW <LL@li.org>\n"
@@ -276,8 +276,8 @@ msgstr "改名失敗：%s"
 
 #. Title of the page listing the songs already on this machine.
 #. Navigation link for the page listing songs already on this machine.
-#: routes/files.py:190 templates/base.html:544 templates/base.html:547
-#: templates/base.html:623
+#: routes/files.py:190 templates/base.html:562 templates/base.html:565
+#: templates/base.html:615
 msgid "Songs"
 msgstr "點歌"
 
@@ -331,13 +331,20 @@ msgid "Renamed file: %s to %s"
 msgstr "已改名：%s 改成 %s"
 
 #. Title of the home page, which shows the song playing now.
-#: routes/home.py:26 templates/base.html:619
+#: routes/home.py:26 templates/base.html:611
 msgid "Now Playing"
 msgstr "正在唱"
 
+#. Title of the phone page listing the pages beyond the main tabs.
+#. Last tab of the phone's bottom tab bar, opening the page that lists the
+#. remaining pages.
+#: routes/home.py:43 templates/base.html:629
+msgid "More"
+msgstr "更多"
+
 #. Title of the page with the QR code to join and the system information.
 #. Menu link to the page with the QR code to join and the system information.
-#: routes/info.py:28 templates/base.html:606
+#: routes/info.py:28 templates/partials/more_links.html:24
 msgid "Info"
 msgstr "邀請家人"
 
@@ -348,8 +355,8 @@ msgstr "不支援查詢 CPU 使用率"
 #. Title of the queue page.
 #. Navigation link for the queue page.
 #. Header of the settings section for the rules of the song queue.
-#: routes/queue.py:28 templates/base.html:535 templates/base.html:537
-#: templates/base.html:627 templates/settings.html:530
+#: routes/queue.py:28 templates/base.html:553 templates/base.html:555
+#: templates/base.html:619 templates/settings.html:530
 msgid "Queue"
 msgstr "待唱清單"
 
@@ -369,26 +376,26 @@ msgstr "沒有更多歌可以加了！"
 
 #. Title of the page used to get new songs into the library.
 #. Navigation link for the page used to get new songs into the library.
-#: routes/search.py:47 templates/base.html:550 templates/base.html:553
-#: templates/base.html:632
+#: routes/search.py:47 templates/base.html:568 templates/base.html:571
+#: templates/base.html:624
 msgid "Add New"
 msgstr "找新歌"
 
 #. Title of the session management page.
 #. Menu link to the karaoke session management page, only shown to the host.
-#: routes/sessions.py:64 templates/base.html:594
+#: routes/sessions.py:64 templates/partials/more_links.html:19
 msgid "Sessions"
 msgstr "歡唱場次"
 
 #. Title of the page logging everything that has been sung.
 #. Menu link to the log of everything that has been sung.
-#: routes/sessions.py:81 templates/base.html:588
+#: routes/sessions.py:81 templates/partials/more_links.html:16
 msgid "Play History"
 msgstr "演唱紀錄"
 
 #. Title of the most-played songs and most active singers page.
 #. Menu link to the most-played songs and most active singers.
-#: routes/sessions.py:104 templates/base.html:583
+#: routes/sessions.py:104 templates/partials/more_links.html:14
 msgid "Rankings"
 msgstr "排行榜"
 
@@ -414,16 +421,16 @@ msgstr "演唱時間"
 #. Label before the name of the singer the play log is filtered to.
 #. Play log column header for who sang the song.
 #. Ranking table column header for the person who sang.
-#: routes/sessions_api.py:287 templates/history.html:412
-#: templates/history.html:469 templates/rankings.html:138
+#: routes/sessions_api.py:287 templates/history.html:413
+#: templates/history.html:470 templates/rankings.html:138
 msgid "Performer"
 msgstr "演唱者"
 
 #. Label before the name of the song the play log is filtered to.
 #. Play log column header for the song that was sung.
 #. Ranking table column header for the song that was sung.
-#: routes/sessions_api.py:287 templates/history.html:432
-#: templates/history.html:473 templates/rankings.html:90
+#: routes/sessions_api.py:287 templates/history.html:433
+#: templates/history.html:474 templates/rankings.html:90
 msgid "Song"
 msgstr "歌曲"
 
@@ -433,7 +440,7 @@ msgstr "PiKaraoke - 演唱紀錄"
 
 #. Title of the settings page.
 #. Menu link to the settings and host controls page.
-#: routes/settings.py:33 templates/base.html:600
+#: routes/settings.py:33 templates/partials/more_links.html:22
 msgid "Settings"
 msgstr "設定"
 
@@ -503,70 +510,70 @@ msgstr "字幕載入失敗："
 
 #. Title of the dialog holding the singer's name and, later, their other
 #. preferences.
-#: templates/base.html:46
+#: templates/base.html:64
 msgid "Profile"
 msgstr "個人資料"
 
 #. Label on the name field in the profile dialog.
-#: templates/base.html:48
+#: templates/base.html:66
 msgid "Username"
 msgstr "我的名字"
 
 #. Hint under the username field noting the name is public.
-#: templates/base.html:50
+#: templates/base.html:68
 msgid "This name is visible to everyone."
 msgstr "大家都會看到這個名字。"
 
 #. Title of the dialog that asks a guest's name the first time they open
 #. PiKaraoke.
-#: templates/base.html:52
+#: templates/base.html:70
 msgid "Welcome! Let's sing"
 msgstr "歡迎一起來唱歌"
 
 #. Text in the first-visit dialog explaining why the guest's name is asked
 #. for.
-#: templates/base.html:54
+#: templates/base.html:72
 msgid "Tell everyone who you are, so they know who picked each song."
 msgstr "告訴大家你是誰，點歌時才知道是誰點的。"
 
 #. Confirmation prompt to clear entire queue. User must type ok to confirm
-#: templates/base.html:56
+#: templates/base.html:74
 msgid "Are you sure you want to clear the ENTIRE queue? Type ok to continue"
 msgstr "確定要清空整個待唱清單嗎？請輸入 ok 繼續"
 
 #. Confirmation dialog when permanently deleting a song file from the library
-#: templates/base.html:58
+#: templates/base.html:76
 msgid "Are you sure you want to delete this song from the library?"
 msgstr "確定要從歌曲庫刪除這首歌嗎？"
 
 #. Label showing the number of semitones for pitch shift. {value} is replaced
 #. with a number like +3 or -2.
-#: templates/base.html:60
+#: templates/base.html:78
 #, python-brace-format
 msgid "{value} semitones"
 msgstr "{value} Key"
 
 #. Confirmation dialog when changing the key/pitch of a song. {label} is
 #. replaced with a label like "+3 semitones".
-#: templates/base.html:62
+#: templates/base.html:80
 #, python-brace-format
 msgid "Transpose this song: {label}?"
 msgstr "要把這首歌調成 {label} 嗎？"
 
 #. Toast confirming the key/pitch change was applied. {label} is replaced with
 #. a label like "+3 semitones".
-#: templates/base.html:64
+#: templates/base.html:82
 #, python-brace-format
 msgid "Key changed: {label}"
 msgstr "已調整：{label}"
 
 #. Confirmation dialog when restarting the currently playing track.
-#: templates/base.html:66
+#: templates/base.html:84
 msgid "Are you sure you want to restart this track?"
 msgstr "確定要從頭重唱這首歌嗎？"
 
 #. Informational tooltip explaining what a semitone is.
-#: templates/base.html:68
+#: templates/base.html:86
 msgid ""
 "A semitone is also known as a half-step. It is the smallest interval used in"
 " classical Western music, equal to a twelfth of an octave or half a tone."
@@ -574,25 +581,25 @@ msgstr "Key 就是半音，是西洋音樂中最小的音程，等於一個八�
 
 #. Confirmation dialog when expanding the filesystem on Raspberry Pi, which
 #. triggers a reboot.
-#: templates/base.html:70
+#: templates/base.html:88
 msgid ""
 "Are you sure you want to expand the filesystem? This will reboot your "
 "raspberry pi."
 msgstr "確定要擴充儲存空間嗎？樹莓派會重新開機。"
 
 #. Label an add-to-queue button switches to once its song is in the queue.
-#: templates/base.html:72
+#: templates/base.html:90
 msgid "In the queue"
 msgstr "已點"
 
 #. Generic error prefix shown before an error message.
-#: templates/base.html:74
+#: templates/base.html:92
 msgid "Error"
 msgstr "錯誤"
 
 #. Accessible label for the banner naming the karaoke session in progress.
 #. {name} is replaced with the session's name.
-#: templates/base.html:276 templates/base.html:648
+#: templates/base.html:294 templates/base.html:640
 #, python-brace-format
 msgid "Current session: {name}"
 msgstr "目前場次：{name}"
@@ -600,26 +607,20 @@ msgstr "目前場次：{name}"
 #. Notification shown after trying to add a song to the queue. The song name
 #. comes after this string.
 #. Navigation link for the home page.
-#: templates/base.html:529 templates/base.html:531
+#: templates/base.html:547 templates/base.html:549
 msgid "Home"
 msgstr "首頁"
 
-#: templates/base.html:558 templates/base.html:561
+#: templates/base.html:576 templates/base.html:579
 msgid "Join in"
 msgstr "加入"
 
-#. Last tab of the phone's bottom tab bar, opening the menu of the remaining
-#. pages.
-#: templates/base.html:637
-msgid "More"
-msgstr "更多"
-
 #. Label on button which saves the changes.
-#: templates/base.html:698 templates/edit.html:167
+#: templates/base.html:692 templates/edit.html:167
 msgid "Save"
 msgstr "儲存"
 
-#: templates/base.html:699 templates/edit.html:172
+#: templates/base.html:693 templates/edit.html:172
 msgid "Cancel"
 msgstr "取消"
 
@@ -718,7 +719,7 @@ msgstr "搜尋歌名、歌手..."
 
 #. Button which empties the filter box and shows every song again.
 #. Link which clears the text from the search box.
-#: templates/files.html:320 templates/search.html:528
+#: templates/files.html:320 templates/search.html:532
 msgid "Clear"
 msgstr "清除"
 
@@ -752,7 +753,7 @@ msgstr "還沒有唱過任何歌。"
 
 #. Status of a song that was sung all the way through.
 #. Play log column header for when the song was played.
-#: templates/history.html:45 templates/history.html:465
+#: templates/history.html:45 templates/history.html:466
 msgid "Played"
 msgstr "已唱"
 
@@ -778,44 +779,44 @@ msgid "Options"
 msgstr "選項"
 
 #. Button which stops filtering the play log to one singer.
-#: templates/history.html:421
+#: templates/history.html:422
 msgid "Show all performers"
 msgstr "顯示所有演唱者"
 
 #. Button which stops filtering the play log to one song.
-#: templates/history.html:438
+#: templates/history.html:439
 msgid "Show all songs"
 msgstr "顯示所有歌曲"
 
 #. Checkbox which hides songs that were skipped before they finished.
-#: templates/history.html:447
+#: templates/history.html:448
 msgid "Hide skipped"
 msgstr "隱藏已切的歌"
 
 #. Play log column header for whether the song was played through, skipped, or
 #. is still playing.
-#: templates/history.html:476
+#: templates/history.html:477
 msgid "Status"
 msgstr "狀態"
 
 #. Menu item which adds the song from this play log entry to the queue.
 #. Button which adds an already-downloaded song to the queue.
 #. Button which downloads a song and puts it straight in the queue.
-#: templates/history.html:496 templates/partials/browse_results.html:20
-#: templates/rankings.html:102 templates/search.html:331
-#: templates/search.html:553 templates/search.html:636
-#: templates/search.html:645
+#: templates/history.html:497 templates/partials/browse_results.html:20
+#: templates/rankings.html:102 templates/search.html:335
+#: templates/search.html:557 templates/search.html:640
+#: templates/search.html:649
 msgid "Add to queue"
 msgstr "點歌"
 
 #. Shown in place of "add to queue" when the song has since been removed from
 #. the library.
-#: templates/history.html:501
+#: templates/history.html:502
 msgid "This song is no longer in the library"
 msgstr "這首歌已不在歌曲庫中"
 
 #. Menu item which removes this entry from the play log.
-#: templates/history.html:506
+#: templates/history.html:507
 msgid "Delete entry"
 msgstr "刪除紀錄"
 
@@ -836,7 +837,7 @@ msgid "No song is queued."
 msgstr "還沒有人點歌。"
 
 #: templates/home.html:95 templates/home.html:293 templates/queue.html:328
-#: templates/queue.html:484
+#: templates/queue.html:488
 msgid "Pause"
 msgstr "暫停"
 
@@ -855,7 +856,7 @@ msgstr "確定要切歌嗎？如果不是你點的歌，請先問過點歌的人
 msgid "Restart Song"
 msgstr "從頭重唱"
 
-#: templates/home.html:289 templates/queue.html:480
+#: templates/home.html:289 templates/queue.html:484
 msgid "Restart"
 msgstr "重唱"
 
@@ -867,7 +868,7 @@ msgstr "播放/暫停"
 msgid "Stop Current Song"
 msgstr "停止播放"
 
-#: templates/home.html:297 templates/queue.html:488
+#: templates/home.html:297 templates/queue.html:492
 msgid "Skip"
 msgstr "切歌"
 
@@ -1114,11 +1115,11 @@ msgid "The queue is empty"
 msgstr "待唱清單是空的"
 
 #. Checkbox label for playing the next queued song automatically
-#: templates/queue.html:408 templates/settings.html:538
+#: templates/queue.html:410 templates/settings.html:538
 msgid "Autoplay"
 msgstr "自動播下一首"
 
-#: templates/queue.html:422
+#: templates/queue.html:426
 msgid ""
 "Add <input id=\"randomNumberInput\" class=\"input mx-2 p-2\" "
 "pattern=\"\\d*\" maxlength=\"2\" value=\"3\" min=\"1\" max=\"99\" "
@@ -1128,42 +1129,42 @@ msgstr ""
 "pattern=\"\\d*\" maxlength=\"2\" value=\"3\" min=\"1\" max=\"99\" "
 "style=\"width: 42px\" /> 首歌"
 
-#: templates/queue.html:426
+#: templates/queue.html:430
 msgid "Clear all"
 msgstr "全部清空"
 
-#: templates/queue.html:440
+#: templates/queue.html:444
 msgid "Play now"
 msgstr "立即播放"
 
-#: templates/queue.html:444
+#: templates/queue.html:448
 msgid "Play Next"
 msgstr "插播"
 
-#: templates/queue.html:444
+#: templates/queue.html:448
 msgid "Move to Top"
 msgstr "移到最前面"
 
-#: templates/queue.html:448
+#: templates/queue.html:452
 msgid "Move Up"
 msgstr "往上移"
 
-#: templates/queue.html:452
+#: templates/queue.html:456
 msgid "Move Down"
 msgstr "往下移"
 
-#: templates/queue.html:456
+#: templates/queue.html:460
 msgid "Move to Bottom"
 msgstr "移到最後面"
 
 #. Menu item which changes the name of a session that already has one.
 #. Button which changes the name of the session that is currently running.
-#: templates/queue.html:460 templates/sessions.html:43
+#: templates/queue.html:464 templates/sessions.html:43
 #: templates/sessions.html:598
 msgid "Rename"
 msgstr "改名"
 
-#: templates/queue.html:464
+#: templates/queue.html:468
 msgid "Remove from Queue"
 msgstr "從待唱清單移除"
 
@@ -1200,76 +1201,76 @@ msgstr "還沒有人唱過歌。"
 
 #. Status shown on a search result that has been requested but has not arrived
 #. yet.
-#: templates/search.html:311
+#: templates/search.html:315
 msgid "Adding..."
 msgstr "加入中..."
 
 #. Badge on a YouTube search result marking a song that is already downloaded.
-#: templates/search.html:337 templates/search.html:620
+#: templates/search.html:341 templates/search.html:624
 msgid "In library"
 msgstr "已下載"
 
 #. Subtitle under the Add New heading, explaining that this page gets songs
 #. the
 #. machine does not have.
-#: templates/search.html:494
+#: templates/search.html:498
 msgid "Add new songs from YouTube"
 msgstr "從 YouTube 找新歌"
 
 #. Placeholder in the box used to search YouTube for a song to download.
-#: templates/search.html:508
+#: templates/search.html:512
 msgid "Search YouTube by title, artist..."
 msgstr "在 YouTube 搜尋歌名、歌手..."
 
 #. Submit button on the search form for searching YouTube.
-#: templates/search.html:514
+#: templates/search.html:518
 msgid "Search"
 msgstr "搜尋"
 
 #. Checkbox label which enables matching songs which are not karaoke versions
 #. (i.e. the songs still                                 have a singer and are
 #. not just instrumentals.)
-#: templates/search.html:524
+#: templates/search.html:528
 msgid "Include non-karaoke matches"
 msgstr "也找原唱 MV"
 
 #. Link which reveals the direct-URL download form.
-#: templates/search.html:530
+#: templates/search.html:534
 msgid "Advanced"
 msgstr "進階"
 
 #. Label for an input which takes a YouTube url directly instead of searching
 #. titles.
-#: templates/search.html:538
+#: templates/search.html:542
 msgid "Paste a YouTube url:"
 msgstr "貼上 YouTube 網址："
 
 #. Button which downloads a song into the library without queuing it.
-#: templates/search.html:558 templates/search.html:684
+#: templates/search.html:562 templates/search.html:688
 msgid "Save for later"
 msgstr "只下載不點歌"
 
 #. Caption above the search hints on the Add New page.
-#: templates/search.html:571
+#: templates/search.html:575
 msgid "Tips"
 msgstr "小技巧"
 
 #. Search hint. Give an example of a well-known song title followed by its
 #. singer, in quotes.
-#: templates/search.html:575
+#: templates/search.html:579
 msgid ""
 "Type the song title and the singer for the best match, e.g. \"My Way Frank "
 "Sinatra\"."
 msgstr "輸入歌名加歌手最準，例如「千千闕歌 陳慧嫻」。"
 
 #. Search hint for when a song cannot be found.
-#: templates/search.html:579
+#: templates/search.html:583
 msgid "Can't find it? Add \"karaoke\" to the search."
 msgstr "找不到嗎？試試加上「KTV」或「伴唱」。"
 
 #. Html text which displays what was searched for, in quotes while the page is
 #. loading.
-#: templates/search.html:595
+#: templates/search.html:599
 #, python-format
 msgid ""
 "Searching YouTube for\n"
@@ -1279,7 +1280,7 @@ msgstr ""
 "\t\t<small><i>「%(search_term)s」</i></small>"
 
 #. Html text which displays what was searched for, in quotes.
-#: templates/search.html:602
+#: templates/search.html:606
 #, python-format
 msgid ""
 "Search results for\n"
@@ -1290,18 +1291,18 @@ msgstr ""
 
 #. Accessible label of the "..." button that opens more actions for a search
 #. result.
-#: templates/search.html:650
+#: templates/search.html:654
 msgid "More options"
 msgstr "更多選項"
 
-#: templates/search.html:664
+#: templates/search.html:668
 msgid ""
 "Preview unavailable for this video. Use the YouTube link on the result to "
 "watch it."
 msgstr "這部影片無法預覽，請點搜尋結果上的 YouTube 連結觀看。"
 
 #. Link which opens a search result's video on YouTube.
-#: templates/search.html:689
+#: templates/search.html:693
 msgid "Watch on YouTube"
 msgstr "在 YouTube 上看"
 

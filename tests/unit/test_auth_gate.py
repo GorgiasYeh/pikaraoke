@@ -20,6 +20,7 @@ EXPECTED_PUBLIC_ENDPOINTS = {
     "bg_music.bg_playlist",
     "files.browse",
     "home.home",
+    "home.more",
     "images.logo",
     "images.qrcode",
     "info.info",

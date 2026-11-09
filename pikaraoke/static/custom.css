@@ -10,12 +10,6 @@
      Noto Sans TC elsewhere. Nothing to download, so it also renders offline. */
   --bulma-family-primary: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC",
     "Microsoft JhengHei", "Segoe UI", "Helvetica Neue", sans-serif;
-  /* iOS body text is 17pt; every rem in Bulma scales from this. */
-  --bulma-body-size: 17px;
-  /* Bulma's small type (tags, help lines, small buttons) is 0.75rem, too small
-     to read at arm's length; iOS footnotes are 13pt of 17. */
-  --bulma-size-7: 0.875rem;
-  --bulma-size-small: 0.875rem;
 
   /* iOS system colours: blue for anything tappable, green for "on" and adding,
      red for removing. Primary and link are both the tint, as on iOS. */
@@ -65,6 +59,17 @@
   /* Bulma scopes the list-item hover to .panel; the option lists in the modals are
      panel-blocks too, and hover the same way. */
   --bulma-panel-block-hover-background-color: var(--bulma-background);
+}
+
+/* A phone is read at arm's length, so its type is iOS's: 17pt body text, and
+   small type (tags, help lines, small buttons) at iOS's 13pt footnote rather than
+   Bulma's 0.75rem. A computer keeps Bulma's sizes. */
+@media screen and (max-width: 768px) {
+  :root {
+    --bulma-body-size: 17px;
+    --bulma-size-7: 0.875rem;
+    --bulma-size-small: 0.875rem;
+  }
 }
 
 /* Bulma's helper hard-codes 0.75rem rather than reading its own variable. */
@@ -879,22 +884,6 @@ td {
     display: inline;
   }
 
-  /* "More" opens the menu as an iOS sheet resting on the tab bar. */
-  .navbar-menu.is-active {
-    position: fixed;
-    inset-inline: 0.5rem;
-    top: auto;
-    bottom: calc(var(--tab-bar-height) + 0.5rem);
-    z-index: 31;
-    border-radius: var(--bulma-radius);
-    background-color: var(--bulma-scheme-main);
-    box-shadow: 0 0.5rem 2rem hsla(0, 0%, 0%, 0.25);
-  }
-  .navbar-menu .navbar-item {
-    min-height: 2.75rem;
-    font-size: 1.05rem;
-  }
-
   /* Every dialog is an iOS sheet: it rises from the bottom edge, where a thumb
      reaches it, rather than floating mid-screen. */
   .modal {
@@ -925,7 +914,8 @@ td {
   font-size: 0.875rem;
 }
 
-/* The player controls: three big glyphs, each over its name. */
+/* The player controls: three glyphs, each over its name. A phone enlarges them
+   to thumb-sized targets; a computer, pointed at with a mouse, keeps them compact. */
 .player-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -936,17 +926,45 @@ td {
   flex-direction: column;
   align-items: center;
   gap: 0.2rem;
-  padding-block: 0.4rem;
-  font-size: 1rem;
+  padding-block: 0.25rem;
+  font-size: var(--bulma-size-7);
 }
 .player-buttons .ph {
-  font-size: 2.6rem;
+  font-size: 2rem;
 }
 /* Filled, as an iOS stepper's halves are: an outline alone vanishes on the card. */
 .transpose-step {
-  min-width: 3.5rem;
-  min-height: 3rem;
-  font-size: 1.6rem;
+  min-width: 2.75rem;
+  font-size: 1.25rem;
   border-color: transparent;
   background-color: var(--bulma-background);
+}
+@media screen and (max-width: 768px) {
+  .player-buttons a {
+    padding-block: 0.4rem;
+    font-size: 1rem;
+  }
+  .player-buttons .ph {
+    font-size: 2.6rem;
+  }
+  .transpose-step {
+    min-width: 3.5rem;
+    min-height: 3rem;
+    font-size: 1.6rem;
+  }
+}
+
+/* The More page: an iOS grouped list, one card with a hairline between rows. */
+.more-list {
+  border-radius: var(--bulma-radius);
+  overflow: hidden;
+  background-color: var(--bulma-scheme-main);
+}
+.more-list .panel-block {
+  gap: 0.75rem;
+  min-height: 3rem;
+  color: var(--bulma-text-strong);
+}
+.more-list .panel-block:not(:last-child) {
+  border-bottom: 1px solid var(--bulma-border-weak);
 }

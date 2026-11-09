@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% from "partials/more_links.html" import more_links with context %}
 {# The TV splash stays dark; every other page follows the phone's setting. #}
 <html{% if blank_page %} data-theme="dark"{% endif %}>
 
@@ -594,42 +595,16 @@
          on come first, then a divider and Info last as the "about this box" page. #}
       <div class="navbar-menu mr-0" id="menu">
         <div class="navbar-end">
-          <a id="rankings" class="navbar-item" href="{{ url_for('sessions.rankings') }}">
-            <span class="icon"><i class="ph ph-trophy"></i></span>
-            {# MSG: Menu link to the most-played songs and most active singers. #}
-            <span>{% trans %}Rankings{% endtrans %}</span>
-          </a>
-          <a id="history" class="navbar-item" href="{{ url_for('sessions.history') }}">
-            <span class="icon"><i class="ph ph-clock-counter-clockwise"></i></span>
-            {# MSG: Menu link to the log of everything that has been sung. #}
-            <span>{% trans %}Play History{% endtrans %}</span>
-          </a>
-          {% if is_admin() %}
-          <a id="sessions" class="navbar-item" href="{{ url_for('sessions.sessions') }}">
-            <span class="icon"><i class="ph ph-calendar-dots"></i></span>
-            {# MSG: Menu link to the karaoke session management page, only shown to the host. #}
-            <span>{% trans %}Sessions{% endtrans %}</span>
-          </a>
-          {% endif %}
-          <a id="settings" class="navbar-item" href="{{ url_for('settings.settings') }}">
-            <span class="icon"><i class="ph ph-gear"></i></span>
-            {# MSG: Menu link to the settings and host controls page. #}
-            <span>{% trans %}Settings{% endtrans %}</span>
-          </a>
-          <hr class="navbar-divider">
-          <a id="info" class="navbar-item" href="{{ url_for('info.info') }}">
-            <span class="icon"><i class="ph ph-info"></i></span>
-            {# MSG: Menu link to the page with the QR code to join and the system information. #}
-            <span>{% trans %}Info{% endtrans %}</span>
-          </a>
+          {{ more_links('navbar-item', with_ids=true) }}
         </div>
       </div>
     </nav>
 
     {# The phone's navigation: an iOS tab bar, each tab an icon over its label.
        custom.css shows it below 769px and hides the bar's own links there; the
-       last tab opens the menu above as a sheet. data-nav is the path segment
-       updateNavHighlight() marks active, as the bar's ids are. #}
+       last tab opens the More page, listing the burger menu's pages. data-nav
+       lists the path segments highlightNavItem() marks the tab active on, so
+       More stays lit on the pages reached from it, as an iOS tab does. #}
     <nav class="tab-bar" aria-label="main navigation">
       <a class="tab-bar-item" data-nav="home" href="{{ url_for('home.home') }}">
         <i class="ph ph-microphone-stage" aria-hidden="true"></i>
@@ -648,9 +623,9 @@
         <i class="ph ph-youtube-logo" aria-hidden="true"></i>
         <span>{% trans %}Add New{% endtrans %}</span>
       </a>
-      <a class="tab-bar-item tab-more" href="#" role="button" aria-controls="menu">
+      <a class="tab-bar-item" data-nav="more rankings history sessions settings info" href="{{ url_for('home.more') }}">
         <i class="ph ph-dots-three-circle" aria-hidden="true"></i>
-        {# MSG: Last tab of the phone's bottom tab bar, opening the menu of the remaining pages. #}
+        {# MSG: Last tab of the phone's bottom tab bar, opening the page that lists the remaining pages. #}
         <span>{% trans %}More{% endtrans %}</span>
       </a>
     </nav>

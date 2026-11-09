@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% from "partials/more_links.html" import more_links with context %}
+{% block content %}
+{# An iOS grouped list: one card, a row per page, a chevron saying it opens one. #}
+<nav class="more-list">
+	{{ more_links('panel-block', chevron=true) }}
+</nav>
+{% endblock %}

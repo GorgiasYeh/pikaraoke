@@ -30,3 +30,15 @@ def home():
         volume=k.volume,
         mic_available=k.sound_manager.available,
     )
+
+
+@home_bp.route("/more")
+@public
+def more():
+    """The phone's More tab: the pages the computer reaches from its menu."""
+    return render_template(
+        "more.html",
+        site_title=get_site_name(),
+        # MSG: Title of the phone page listing the pages beyond the main tabs.
+        title=_("More"),
+    )

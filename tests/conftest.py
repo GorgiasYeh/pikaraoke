@@ -22,6 +22,7 @@ PIKARAOKE_PACKAGE = Path(__file__).resolve().parent.parent / "pikaraoke"
 # test does not have to rediscover the layout's own dependencies.
 _BASE_TEMPLATE_ENDPOINTS = [
     ("/", "home.home"),
+    ("/more", "home.more"),
     ("/queue", "queue.queue"),
     ("/browse", "files.browse"),
     ("/search", "search.search"),
