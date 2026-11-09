@@ -517,15 +517,6 @@
     .session-ribbon-dot { animation: none; }
   }
   @media screen and (max-width: 1088px) {
-    /* Labels hide at this width, leaving the icon (now a Bulma .icon span) as the
-       item's only signal; the avatar slot is the signal for #current-user. */
-    .navbar-brand > .navbar-item > span:not(.singer-avatar):not(.icon) {
-      display: none;
-    }
-    /* Name hidden here; trim the trailing padding before the burger. */
-    #current-user {
-      padding-right: 0.5rem;
-    }
     .notification-stack {
       width: 100%;
       left: 0px;

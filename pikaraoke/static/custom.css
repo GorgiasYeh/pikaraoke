@@ -879,10 +879,6 @@ td {
   .navbar-brand > .navbar-burger {
     display: none;
   }
-  /* The name shows here, where the bar has room for it; the wide bar hides it. */
-  #current-user > .is-truncated {
-    display: inline;
-  }
 
   /* Every dialog is an iOS sheet: it rises from the bottom edge, where a thumb
      reaches it, rather than floating mid-screen. */

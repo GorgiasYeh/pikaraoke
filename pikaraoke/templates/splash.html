@@ -342,14 +342,11 @@
     display: none;
     overflow: hidden;
   }
+  /* Wider than the 768px phone breakpoint, so the page inside shows the
+     computer layout; a narrow screen shrinks it back to the phone one. */
   #menu-container iframe {
-    width: 600px;
+    width: min(800px, 90vw);
     height: 75vh;
-  }
-  @media (max-width: 650px) {
-    #menu-container iframe {
-      width: 90vw;
-    }
   }
   .visible {
     visibility: visible;
